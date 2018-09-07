@@ -1,0 +1,21 @@
+// Here you can add other styles
+#pagination{
+    ul{
+        margin-bottom: 0;
+        li{
+            a{
+                z-index: 1;
+                position: relative;
+                display: block;
+                padding: .5rem .75rem;
+                margin-left: -1px;
+                line-height: 1.25;
+                color: #007bff;
+                background-color: #fff;
+                border: 1px solid #dee2e6;
+                text-decoration: none;
+                font-size: 15px;
+            }
+        }
+    }
+}
