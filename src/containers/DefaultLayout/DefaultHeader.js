@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import logo from '../../assets/img/brand/logo.png'
-import sygnet from '../../assets/img/brand/sygnet.svg'
+import sygnet from '../../assets/img/brand/sygnet.png'
 import {createHashHistory} from 'history'
 import ListRestaurant from './ListRestaurant';
 import {Link} from "react-router-dom";

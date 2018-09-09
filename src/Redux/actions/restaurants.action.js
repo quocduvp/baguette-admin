@@ -24,6 +24,7 @@ export const addRestaurants = (data) => dispatch => new Promise((resolve,rejects
         dispatch({
             type : ADD_RESTAURANTS
         })
+        dispatch(refeshRestaurants())
         resolve(r)
     })
     .catch(err=>{
@@ -42,6 +43,7 @@ export const updateRestaurants = ({id},data) => dispatch => new Promise((resolve
         dispatch({
             type : ADD_RESTAURANTS
         })
+        dispatch(refeshRestaurants())
         resolve(r)
     })
     .catch(err=>{

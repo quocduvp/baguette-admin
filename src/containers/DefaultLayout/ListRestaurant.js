@@ -12,6 +12,7 @@ import {getListRestaurantUsers} from "../../Redux/actions/restaurant_users.actio
 import {getListRestaurantEmails} from "../../Redux/actions/restaurant_emails.action";
 import {checkRole} from "../../utils/check_roles";
 import {getListUsers} from "../../Redux/actions/users.action";
+import {getListRestaurants} from "../../Redux/actions/restaurants.action";
 
 class ListRestaurant extends Component {
   state = {
@@ -36,6 +37,8 @@ class ListRestaurant extends Component {
       }
       if (this.props.users.list.length < 1)
         this.props.dispatch(getListUsers())
+      if (this.props.restaurants.list.length < 1)
+        this.props.dispatch(getListRestaurants())
       if (this.props.categories.list.length < 1)
         this.props.dispatch(getListCategories(restaurant_id))
       if (this.props.foods.list.length < 1)
@@ -90,7 +93,7 @@ class ListRestaurant extends Component {
     const resList = this.props.restaurants.list
     return (
       <AppHeaderDropdown direction="down">
-        <DropdownToggle nav>
+        <DropdownToggle nav className={'restaurants'}>
           <img src={restaurantImage} className="img-avatar" alt="restaurant"/>
         </DropdownToggle>
         <DropdownMenu right style={{right: 'auto'}}>
