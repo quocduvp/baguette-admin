@@ -66,7 +66,7 @@ class RestaurantUsers extends Component {
                 <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
               </CardHeader>
               <CardBody>
-                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.restaurant.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
+                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.user.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
               </CardBody>
             </Card>
           </Col>

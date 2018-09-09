@@ -1,26 +1,37 @@
-import React, { Component } from 'react';
-import { ButtonGroup,Button,Card, CardBody,CardHeader, Col, Row, Table } from 'reactstrap';
+import React, {Component} from 'react';
+import {ButtonGroup, Button, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import SearchForm from '../../component/SearchForm';
 import ButtonRedirect from '../../component/ButtonRedirect';
 // import PanigationCustom from '../../component/Panigation';
-import { connect } from 'react-redux'
-import { removeCategories } from '../../Redux/actions/categories.action';
+import {connect} from 'react-redux'
+import {removeCategories} from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
-import { role } from '../../utils/check_roles';
+import {GetText, role} from '../../utils/check_roles';
 
 class Categories extends Component {
   state = {
-    restaurant_id : 0
+    restaurant_id: 0,
+    searchText: ""
   }
 
-  ChangeRestaurantId(e){
+  //search
+  HandleSearch(e) {
     e.preventDefault()
+    console.log(e)
     this.setState({
-      restaurant_id : e.target.value
+      searchText: e.target.value
     })
   }
+
+  ChangeRestaurantId(e) {
+    e.preventDefault()
+    this.setState({
+      restaurant_id: e.target.value
+    })
+  }
+
   //delete
-  handleDelete(id,e){
+  handleDelete(id, e) {
     e.preventDefault()
     swal({
       title: 'Are you sure?',
@@ -33,73 +44,74 @@ class Categories extends Component {
     }).then((result) => {
       if (result.value) {
         this.props.dispatch(removeCategories(id))
-        .then(r=>{
-          swal(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }).catch(err=>{
+          .then(r => {
+            swal(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          }).catch(err => {
           swal(
             'Error!',
             'Delete fails.',
             'error'
           )
         })
-        
+
       }
     })
   }
 
-  renderRow = (cate,id) => (
-        <tr key={id}>
-            <td>{++id}</td>
-            <td>{cate.name}</td>
-            <td>{cate.category_type}</td>
-            <td>
-              {cate.photo.photo_url ? cate.photo.photo_url.substring(0,30): ''}
-            </td>
-            <td>{new Date(cate.updated_at).toLocaleDateString()}</td>
-            <td>{new Date(cate.created_at).toLocaleDateString()}</td>
-            <td>
-              <ButtonGroup>
-                <Button onClick={this.handleDelete.bind(this,cate.id)} color="danger" style={{fontSize:'12px'}}>
-                  Delete
-                  </Button>
-                <ButtonRedirect path={`${role}/Categories/edit/${cate.id}`} color="primary">
-                  Edit
-                </ButtonRedirect>
-              </ButtonGroup>
-            </td>
-        </tr>
+  renderRow = (cate, id) => (
+    <tr key={id}>
+      <td>{++id}</td>
+      <td>{cate.name}</td>
+      <td>{cate.category_type}</td>
+      <td>
+        {cate.photo.photo_url ? cate.photo.photo_url.substring(0, 30) : ''}
+      </td>
+      <td>{new Date(cate.updated_at).toLocaleDateString()}</td>
+      <td>{new Date(cate.created_at).toLocaleDateString()}</td>
+      <td>
+        <ButtonGroup>
+          <Button onClick={this.handleDelete.bind(this, cate.id)} color="danger" style={{fontSize: '12px'}}>
+            Delete
+          </Button>
+          <ButtonRedirect path={`${role}/Categories/edit/${cate.id}`} color="primary">
+            Edit
+          </ButtonRedirect>
+        </ButtonGroup>
+      </td>
+    </tr>
   )
 
   //filter list
   renderTable = (list) => {
-    return(
-    <Table responsive hover>
-                  <thead className="thead-dark">
-                    <tr>
-                      <th scope="col">Id</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Type</th>
-                      <th scope="col">Image</th>
-                      <th scope="col" style={{minWidth:'114px'}}>Update at</th>
-                      <th scope="col" style={{minWidth:'114px'}}>Create at</th>
-                      <th scope="col" className="text-center">Process</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {list.map((v,id)=>(
-                      this.renderRow(v,id)
-                    ))}
-                  </tbody>
+    return (
+      <Table responsive hover>
+        <thead className="thead-dark">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Type</th>
+          <th scope="col">Image</th>
+          <th scope="col" style={{minWidth: '114px'}}>Update at</th>
+          <th scope="col" style={{minWidth: '114px'}}>Create at</th>
+          <th scope="col" className="text-center">Process</th>
+        </tr>
+        </thead>
+        <tbody>
+        {list.map((v, id) => (
+          this.renderRow(v, id)
+        ))}
+        </tbody>
       </Table>
     )
   }
 
   render() {
-    const { list } = this.props.categories
+    const {list} = this.props.categories
+    const {searchText} = this.state
     return (
       <div className="animated fadeIn">
         <Row>
@@ -109,10 +121,10 @@ class Categories extends Component {
                 <ButtonRedirect path={`${role}/Categories/create`} color="primary">
                   Create
                 </ButtonRedirect>
-                <SearchForm/>
+                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
               </CardHeader>
               <CardBody>
-                {this.renderTable(list)}
+                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
               </CardBody>
               {/* <CardFooter className="d-flex justify-content-center">
                 <PanigationCustom changePage={this.handleChangePage} perpage={perPage} totalItems={totalItems} pageRange={3}/>
@@ -127,7 +139,7 @@ class Categories extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    categories : state.categories
+    categories: state.categories
   }
 }
 export default connect(mapStateToProps)(Categories);

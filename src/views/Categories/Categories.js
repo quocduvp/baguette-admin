@@ -6,8 +6,22 @@ import ButtonRedirect from '../../component/ButtonRedirect';
 import { connect } from 'react-redux'
 import { removeCategories } from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
+import {GetText} from "../../utils/check_roles";
 
 class Categories extends Component {
+  state = {
+    searchText: ""
+  }
+
+  //search
+  HandleSearch(e) {
+    e.preventDefault()
+    console.log(e)
+    this.setState({
+      searchText: e.target.value
+    })
+  }
+
   //delete
   handleDelete(id,e){
     e.preventDefault()
@@ -89,6 +103,7 @@ class Categories extends Component {
 
   render() {
     const { list } = this.props.categories
+    const {searchText} = this.state
     return (
       <div className="animated fadeIn">
         <Row>
@@ -98,10 +113,10 @@ class Categories extends Component {
                 <ButtonRedirect path={`/Categories/create`} color="primary">
                   Create
                 </ButtonRedirect>
-                <SearchForm/>
+                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
               </CardHeader>
               <CardBody>
-                {this.renderTable(list)}
+                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
               </CardBody>
               {/* <CardFooter className="d-flex justify-content-center">
                 <PanigationCustom changePage={this.handleChangePage} perpage={perPage} totalItems={totalItems} pageRange={3}/>
