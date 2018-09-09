@@ -61,7 +61,7 @@ export const fetchListUsers = () => {
     let settings = {
       "async": true,
       "crossDomain": true,
-      "url": `${corsURL}${url}/users&all=true`,
+      "url": `${corsURL}${url}/users?all=true`,
       "method": 'GET',
       "headers": Headers(),
     }

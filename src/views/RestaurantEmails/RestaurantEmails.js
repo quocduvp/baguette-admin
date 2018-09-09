@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ButtonGroup, Button, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import SearchForm from '../../component/SearchForm';
 import {connect} from 'react-redux'
-import {GetText, role} from "../../utils/check_roles";
+import {GetText} from "../../utils/check_roles";
 import ButtonRedirect from "../../component/ButtonRedirect";
 import {removeRestaurantEmails} from "../../Redux/actions/restaurant_emails.action";
 import swal from "sweetalert2";
@@ -54,7 +54,7 @@ class RestaurantEmails extends Component {
           <Button onClick={this.handleDelete.bind(this, restaurant.id)} color="danger" style={{fontSize: '12px'}}>
             Delete
           </Button>
-          <ButtonRedirect path={`${role}/Restaurant_emails/edit/${restaurant.id}`} color="primary">
+          <ButtonRedirect path={`/Restaurant_emails/edit/${restaurant.id}`} color="primary">
             Edit
           </ButtonRedirect>
         </ButtonGroup>
@@ -98,7 +98,7 @@ class RestaurantEmails extends Component {
           <Col xl={12}>
             <Card>
               <CardHeader className="d-flex justify-content-between">
-                <ButtonRedirect path={`${role}/restaurant_emails/create`} color="primary">
+                <ButtonRedirect path={`/restaurant_emails/create`} color="primary">
                   Create
                 </ButtonRedirect>
                 <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>

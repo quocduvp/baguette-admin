@@ -4,7 +4,6 @@ import ButtonRedirect from '../../component/ButtonRedirect';
 import {connect} from 'react-redux' 
 import SpinnerCustom from '../../component/SpinnerCustom'
 import swal from 'sweetalert2'
-import {role} from "../../utils/check_roles";
 import {updateRestaurantEmails} from "../../Redux/actions/restaurant_emails.action";
 import {fetchRestaurantEmailsDetails} from "../../utils";
 class EditRestaurantEmails extends React.Component {
@@ -72,7 +71,7 @@ class EditRestaurantEmails extends React.Component {
             <Col xl={{size: 6, order: 2,offset:3}} md={{size: 8, order: 2,offset:2}}>
             <Card>
               <CardHeader>
-                <ButtonRedirect path={`${role}/Restaurant_emails`} color="primary">
+                <ButtonRedirect path={`/Restaurant_emails`} color="primary">
                   Back
                 </ButtonRedirect>
               </CardHeader>

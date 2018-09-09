@@ -10,6 +10,8 @@ import {getListFoods} from '../../Redux/actions/foods.action';
 import {getListFoodOptions} from "../../Redux/actions/food_options.action";
 import {getListRestaurantUsers} from "../../Redux/actions/restaurant_users.action";
 import {getListRestaurantEmails} from "../../Redux/actions/restaurant_emails.action";
+import {checkRole} from "../../utils/check_roles";
+import {getListUsers} from "../../Redux/actions/users.action";
 
 class ListRestaurant extends Component {
   state = {
@@ -32,6 +34,8 @@ class ListRestaurant extends Component {
       if (!this.props.roles.restaurant_id) {
         this.props.dispatch(setRoles({restaurant_id, restaurant_name, role, user_id}))
       }
+      if (this.props.users.list.length < 1)
+        this.props.dispatch(getListUsers())
       if (this.props.categories.list.length < 1)
         this.props.dispatch(getListCategories(restaurant_id))
       if (this.props.foods.list.length < 1)
@@ -44,7 +48,7 @@ class ListRestaurant extends Component {
         this.props.dispatch(getListRestaurantEmails(restaurant_name))
     }
   }
-
+  // if role admin
   changeRes(res, e) {
     e.preventDefault()
     const {restaurant_id, role, user_id} = res
@@ -53,6 +57,26 @@ class ListRestaurant extends Component {
       restaurant_id: restaurant_id
     })
     //update set restaurant
+    this.props.dispatch(getListUsers())
+    this.props.dispatch(setRoles({restaurant_id, restaurant_name, role, user_id}))
+    this.props.dispatch(getListCategories(restaurant_id))
+    this.props.dispatch(getListFoods(restaurant_id))
+    this.props.dispatch(getListFoodOptions(restaurant_id))
+    this.props.dispatch(getListRestaurantUsers())
+    this.props.dispatch(getListRestaurantEmails(restaurant_name))
+  }
+  //if role super admin
+  changeResSuper(res, e){
+    e.preventDefault()
+    const restaurant_id = res.id
+    const role = "super_admin"
+    const user_id = 1
+    const restaurant_name = res.name
+    this.setState({
+      restaurant_id: restaurant_id
+    })
+    //update set restaurant
+    this.props.dispatch(getListUsers())
     this.props.dispatch(setRoles({restaurant_id, restaurant_name, role, user_id}))
     this.props.dispatch(getListCategories(restaurant_id))
     this.props.dispatch(getListFoods(restaurant_id))
@@ -63,6 +87,7 @@ class ListRestaurant extends Component {
 
   render() {
     const {restaurant_id, restaurants} = this.state
+    const resList = this.props.restaurants.list
     return (
       <AppHeaderDropdown direction="down">
         <DropdownToggle nav>
@@ -71,13 +96,22 @@ class ListRestaurant extends Component {
         <DropdownMenu right style={{right: 'auto'}}>
           <DropdownItem header tag="div" className="text-center"><strong>Restaurants</strong></DropdownItem>
           <DropdownItem divider/>
-          {restaurants.map((res) => {
-            return (
-              <DropdownItem key={res.id} onClick={this.changeRes.bind(this, res)}><i
-                className={Number(restaurant_id) === Number(res.restaurant_id) ? 'fa fa-check-square-o' : 'fa fa-square-o'}></i> {res.restaurant.name}
-              </DropdownItem>
-            )
-          })}
+          {checkRole() ?
+            resList.map((res,id)=>{
+              return(
+                <DropdownItem key={res.id} onClick={this.changeResSuper.bind(this, res)}><i
+                  className={Number(restaurant_id) === Number(res.id) ? 'fa fa-check-square-o' : 'fa fa-square-o'}></i> {res.name}
+                </DropdownItem>
+              )
+            }) :
+            restaurants.map((res) => {
+              return (
+                <DropdownItem key={res.id} onClick={this.changeRes.bind(this, res)}><i
+                  className={Number(restaurant_id) === Number(res.restaurant_id) ? 'fa fa-check-square-o' : 'fa fa-square-o'}></i> {res.restaurant.name}
+                </DropdownItem>
+              )
+            })
+          }
         </DropdownMenu>
       </AppHeaderDropdown>
     )
