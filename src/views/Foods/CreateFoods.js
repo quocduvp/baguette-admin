@@ -4,16 +4,15 @@ import ButtonRedirect from '../../component/ButtonRedirect';
 import {connect} from 'react-redux'
 import SpinnerCustom from '../../component/SpinnerCustom'
 import swal from 'sweetalert2'
-import { role } from '../../utils/check_roles';
 import {addFoods} from "../../Redux/actions/foods.action";
 class CreateFoods extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      category_id: 0,
+      category_id: "",
       name: "",
       description: "",
-      price: 0,
+      price: "",
       photo: ""
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -50,7 +49,7 @@ class CreateFoods extends React.Component {
     this.setState({
       name: "",
       description: "",
-      price: 0,
+      price: "",
     })
   }
 
@@ -78,7 +77,7 @@ class CreateFoods extends React.Component {
           <Col xl={{size: 6, order: 2,offset:3}} md={{size: 8, order: 2,offset:2}}>
             <Card>
               <CardHeader>
-                <ButtonRedirect path={`${role}/Foods`} color="primary">
+                <ButtonRedirect path={`/Foods`} color="primary">
                   Back
                 </ButtonRedirect>
               </CardHeader>

@@ -25,6 +25,7 @@ export const addRestaurantUsers = (data) => dispatch => new Promise((resolve,rej
         dispatch({
             type : ADD_RESTAURANT_USERS
         })
+        dispatch(refeshRestaurantUsers())
         resolve(r)
     })
     .catch(err=>{
@@ -35,14 +36,15 @@ export const addRestaurantUsers = (data) => dispatch => new Promise((resolve,rej
     })
 })
 
-export const updateRestaurantUsers = ({id},data) => dispatch => new Promise((resolve,rejects)=>{
+export const updateRestaurantUsers = (data,{id}) => dispatch => new Promise((resolve,rejects)=>{
     dispatch({
         type: WAIT_RESTAURANT_USERS
     })
-    editRestaurantUsers({id},data).then(r=>{
+    editRestaurantUsers(data,{id}).then(r=>{
         dispatch({
             type : ADD_RESTAURANT_USERS
         })
+        dispatch(refeshRestaurantUsers())
         resolve(r)
     })
     .catch(err=>{
@@ -53,8 +55,8 @@ export const updateRestaurantUsers = ({id},data) => dispatch => new Promise((res
     })
 })
 
-export const removeRestaurantUsers = ({id}) => dispatch => new Promise((resolve,rejects)=>{
-    deleteRestaurantUsers({id})
+export const removeRestaurantUsers = (id) => dispatch => new Promise((resolve,rejects)=>{
+    deleteRestaurantUsers(id)
     .then(r=>{
         dispatch(refeshRestaurantUsers())
         resolve(r)

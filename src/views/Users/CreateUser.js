@@ -17,7 +17,7 @@ class CreateUser extends React.Component {
       address: "",
       email: "",
       password: "",
-      restaurant_id: 0,
+      restaurant_id: this.props.roles.restaurant_id,
       role: 'admin'
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -63,8 +63,7 @@ class CreateUser extends React.Component {
     })
   }
   render() {
-    const {name,phone,nickname,address,email,password,restaurant_id,role} = this.state
-    const { list } = this.props.restaurants
+    const {name,phone,nickname,address,email,password} = this.state
     const { waitting } = this.props.users
     return (
       <div className="animated fadeIn">
@@ -95,20 +94,6 @@ class CreateUser extends React.Component {
                     <Input name="address" value={address} onChange={this.handleChange}/>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="exampleRole">Role</Label>
-                    <Input name="role" value={role} disabled onChange={this.handleChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="exampleRestaurants">Restaurants</Label>
-                    <Input name="restaurant_id" value={restaurant_id} onChange={this.handleChange} type="select">
-                      {list.map((item,id)=>(
-                        <option key={id} value={item.id}>
-                          {item.name}
-                        </option>
-                      ))}
-                    </Input>
-                  </FormGroup>
-                  <FormGroup>
                     <Label for="exampleEmail">Email</Label>
                     <Input name="email" value={email} onChange={this.handleChange} type="email"/>
                   </FormGroup>
@@ -134,7 +119,8 @@ class CreateUser extends React.Component {
 const mapStateToProps = (state) => {
   return{
     restaurants : state.restaurants,
-    users : state.users
+    users : state.users,
+    roles : state.roles
   }
 }
 export default connect(mapStateToProps)(CreateUser)

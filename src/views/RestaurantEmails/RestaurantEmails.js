@@ -2,12 +2,16 @@ import React, {Component} from 'react';
 import {ButtonGroup, Button, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import SearchForm from '../../component/SearchForm';
 import {connect} from 'react-redux'
-import {role} from "../../utils/check_roles";
+import {GetText, role} from "../../utils/check_roles";
 import ButtonRedirect from "../../component/ButtonRedirect";
 import {removeRestaurantEmails} from "../../Redux/actions/restaurant_emails.action";
 import swal from "sweetalert2";
 
 class RestaurantEmails extends Component {
+  state = {
+    searchText: ""
+  }
+
   handleDelete(id, e) {
     e.preventDefault()
     swal({
@@ -21,13 +25,13 @@ class RestaurantEmails extends Component {
     }).then((result) => {
       if (result.value) {
         this.props.dispatch(removeRestaurantEmails(id))
-          .then(r=>{
+          .then(r => {
             swal(
               'Deleted!',
               'Email has been deleted.',
               'success'
             )
-          }).catch(err=>{
+          }).catch(err => {
           swal(
             'Error!',
             'Delete fails.',
@@ -77,8 +81,17 @@ class RestaurantEmails extends Component {
     </Table>
   )
 
+  //search
+  HandleSearch(e) {
+    e.preventDefault()
+    this.setState({
+      searchText: e.target.value
+    })
+  }
+
   render() {
     const {list} = this.props.restaurant_emails
+    const {searchText} = this.state
     return (
       <div className="animated fadeIn">
         <Row>
@@ -88,10 +101,10 @@ class RestaurantEmails extends Component {
                 <ButtonRedirect path={`${role}/restaurant_emails/create`} color="primary">
                   Create
                 </ButtonRedirect>
-                <SearchForm/>
+                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
               </CardHeader>
               <CardBody>
-                {list.length <= 0 ? 'Not found' : this.renderTable(list)}
+                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.email).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
               </CardBody>
             </Card>
           </Col>

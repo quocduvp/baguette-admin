@@ -66,7 +66,7 @@ class Login extends Component {
     const {err, logining} = this.props.auth
     return (
       <div
-        style={{backgroundImage: `linear-gradient(to right bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)),url(${bg})`}}
+        style={{backgroundImage: `linear-gradient(to right bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)),url(${bg})`,backgroundSize:'cover',backgroundPosition:'center'}}
         className="app flex-row align-items-center">
         <Container>
           <Row className="justify-content-center">

@@ -49,7 +49,7 @@ class CreateFoodOptions extends React.Component {
     this.setState({
       name: "",
       description: "",
-      price: 0,
+      price: "",
     })
   }
 

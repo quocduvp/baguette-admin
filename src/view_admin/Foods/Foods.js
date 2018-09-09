@@ -70,7 +70,7 @@ class Foods extends Component {
       {data.map((item, id) => {
         return (
           <tr key={id}>
-            <td>{id}</td>
+            <td>{++id}</td>
             <td>{item.name.length >= 40 ? item.name.substring(0, 40) + '...' : item.name}</td>
             <td>{item.price}</td>
             <td>{item.category.name}</td>
@@ -114,7 +114,9 @@ class Foods extends Component {
           <Col xl={12}>
             <Card>
               <CardHeader className="d-flex justify-content-between">
-                <div></div>
+                <ButtonRedirect path={`${role}/Foods/create`} color="primary">
+                  Create
+                </ButtonRedirect>
                 <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
               </CardHeader>
               <CardBody style={{overflow: 'auto'}}>

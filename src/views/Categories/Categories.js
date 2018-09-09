@@ -6,19 +6,8 @@ import ButtonRedirect from '../../component/ButtonRedirect';
 import { connect } from 'react-redux'
 import { removeCategories } from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
-import { role } from '../../utils/check_roles';
 
 class Categories extends Component {
-  state = {
-    restaurant_id : 0
-  }
-
-  ChangeRestaurantId(e){
-    e.preventDefault()
-    this.setState({
-      restaurant_id : e.target.value
-    })
-  }
   //delete
   handleDelete(id,e){
     e.preventDefault()
@@ -66,7 +55,7 @@ class Categories extends Component {
                 <Button onClick={this.handleDelete.bind(this,cate.id)} color="danger" style={{fontSize:'12px'}}>
                   Delete
                   </Button>
-                <ButtonRedirect path={`${role}/Categories/edit/${cate.id}`} color="primary">
+                <ButtonRedirect path={`/Categories/edit/${cate.id}`} color="primary">
                   Edit
                 </ButtonRedirect>
               </ButtonGroup>
@@ -106,7 +95,7 @@ class Categories extends Component {
           <Col xl={12}>
             <Card>
               <CardHeader className="d-flex justify-content-between">
-                <ButtonRedirect path={`${role}/Categories/create`} color="primary">
+                <ButtonRedirect path={`/Categories/create`} color="primary">
                   Create
                 </ButtonRedirect>
                 <SearchForm/>

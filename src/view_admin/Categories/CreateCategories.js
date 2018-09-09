@@ -2,18 +2,17 @@ import React from 'react';
 import { Button,CardHeader,Card,CardBody,Row,Col,Form, FormGroup, Label, Input } from 'reactstrap';
 import ButtonRedirect from '../../component/ButtonRedirect';
 import { getListRestaurants } from '../../Redux/actions/restaurants.action';
-import {connect} from 'react-redux' 
-import Alerts from '../../component/Alerts'
+import {connect} from 'react-redux'
 import SpinnerCustom from '../../component/SpinnerCustom'
 import { addCategories } from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
-import { role } from '../../utils/check_roles';
+
 class CreateCategories extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       name: "",
-      category_type: "",
+      category_type: "menu",
       restaurant_id: this.props.roles.restaurant_id,
       photo: ""
     }
@@ -66,26 +65,17 @@ class CreateCategories extends React.Component {
       photo : e.target.files[0]
     })
   }
-  errorMessage = (message) => {
-    const {category_type,restaurant_id,name} = this.state
-    if(category_type&restaurant_id&name){
-      return ''
-    }else{
-      return(
-        <Alerts color="danger">{message}</Alerts>
-      )
-    }
-  }
+
   render() {
     const {category_type,name} = this.state
-    const { err,waitting } = this.props.categories
+    const { waitting } = this.props.categories
     return (
       <div className="animated fadeIn">
         <Row>
             <Col xl={{size: 6, order: 2,offset:3}} md={{size: 8, order: 2,offset:2}}>
             <Card>
               <CardHeader>
-                <ButtonRedirect path={`${role}/Categories`} color="primary">
+                <ButtonRedirect path={`/Categories`} color="primary">
                   Back
                 </ButtonRedirect>
               </CardHeader>
@@ -110,10 +100,6 @@ class CreateCategories extends React.Component {
                     <Label for="Icons">Category Icons</Label>
                     <Input onChange={this.handleFile} type="file"/>
                   </FormGroup>
-
-                  {waitting ? this.errorMessage('Form is not empty') : ''}
-
-                  {err ? this.errorMessage('Bad request') : ''}
 
                   <div className="d-flex justify-content-end">
                     {waitting ? <SpinnerCustom/> :

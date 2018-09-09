@@ -5,8 +5,7 @@ import {connect} from 'react-redux'
 import SpinnerCustom from '../../../component/SpinnerCustom'
 import swal from 'sweetalert2'
 import { role } from '../../../utils/check_roles';
-import {fetchFoodDatails, fetchFoodOptionDetails} from "../../../utils/index";
-import {updateFoods} from "../../../Redux/actions/foods.action";
+import {fetchFoodOptionDetails} from "../../../utils/index";
 import {updateFoodOptions} from "../../../Redux/actions/food_options.action";
 class EditFoodOptions extends React.Component {
   constructor(props){

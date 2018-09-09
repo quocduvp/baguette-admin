@@ -19,3 +19,14 @@
         }
     }
 }
+
+.restaurants{
+  img{
+    transition: all 500ms;
+  }
+  &:hover{
+    img{
+      transform: rotate(360deg);
+    }
+  }
+}

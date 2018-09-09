@@ -3,12 +3,12 @@ import {ButtonGroup, Button, Card, CardBody, CardHeader, Col, Row, Table} from '
 import SearchForm from '../../../component/SearchForm';
 import ButtonRedirect from '../../../component/ButtonRedirect';
 import {connect} from 'react-redux'
-import {role} from '../../../utils/check_roles';
+import {GetText, role} from '../../../utils/check_roles';
 import {removeFoodOptions} from "../../../Redux/actions/food_options.action";
 import swal from 'sweetalert2'
 class FoodOptions extends Component {
-  componentDidMount() {
-    console.log(this.props)
+  state = {
+    searchText: ""
   }
 
   handleDelete(id, e) {
@@ -39,6 +39,14 @@ class FoodOptions extends Component {
         })
 
       }
+    })
+  }
+
+  //search
+  HandleSearch(e) {
+    e.preventDefault()
+    this.setState({
+      searchText: e.target.value
     })
   }
 
@@ -94,22 +102,26 @@ class FoodOptions extends Component {
   render() {
     const {list} = this.props.food_options
     const  url = this.props.match.url
+    const {searchText} = this.state
     return (
       <div className="animated fadeIn">
         <Row>
           <Col xl={12}>
             <Card>
               <CardHeader className="d-flex justify-content-between">
+                <div>
                   <ButtonRedirect path={`${role}/Foods`} color="primary">
                     Back
                   </ButtonRedirect>
+                  {`  `}
                   <ButtonRedirect path={`${url}/create`} color="info">
                     Add options
                   </ButtonRedirect>
-                <SearchForm/>
+                </div>
+                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
               </CardHeader>
-              <CardBody>
-                {this.renderTable(list)}
+              <CardBody style={{overflow: 'auto'}}>
+                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
               </CardBody>
             </Card>
           </Col>

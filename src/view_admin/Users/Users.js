@@ -3,17 +3,11 @@ import {ButtonGroup, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstr
 import {connect} from 'react-redux'
 import SearchForm from '../../component/SearchForm';
 import ButtonRedirect from '../../component/ButtonRedirect';
-import {getListRestaurants} from '../../Redux/actions/restaurants.action';
-import {getListUsers} from '../../Redux/actions/users.action';
 import {role,GetText} from "../../utils/check_roles";
 
 class Users extends Component {
   state = {
     searchText : ""
-  }
-  componentDidMount() {
-    this.props.dispatch(getListRestaurants())
-    this.props.dispatch(getListUsers())
   }
 
   renderRow = (user, id) => (

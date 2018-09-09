@@ -51,11 +51,27 @@ const Restaurants = Loadable({
   loader : () => import('./views/Restaurants'),
   loading: Loading
 })
+const CreateRestaurants = Loadable({
+  loader : () => import('./views/Restaurants/CreateRestaurants'),
+  loading: Loading
+})
+const EditRestaurants = Loadable({
+  loader : () => import('./views/Restaurants/EditRestaurants'),
+  loading: Loading
+})
 
 //----Restaurant users ---//
 //Restaurants
 const RestaurantUsers = Loadable({
   loader : () => import('./views/RestaurantUsers'),
+  loading: Loading
+})
+const CreateRestaurantUsers = Loadable({
+  loader : () => import('./views/RestaurantUsers/CreateRestauranUsers'),
+  loading: Loading
+})
+const EditRestaurantUsers = Loadable({
+  loader : () => import('./views/RestaurantUsers/EditRestaurantUsers'),
   loading: Loading
 })
 
@@ -120,7 +136,11 @@ const routes = [
   { path: `/categories/create`, exact: true, name: 'Create category', component: CreateCategories },
   { path: `/categories/edit/:id`, exact: true, name: 'Create category', component: EditCategories },
   { path: `/restaurants`, exact: true, name: 'Restaurants', component: Restaurants },
+  { path: `/restaurants/create`, exact: true, name: 'Add new Restaurants', component: CreateRestaurants },
+  { path: `/restaurants/edit/:id`, exact: true, name: 'Edit Restaurants', component: EditRestaurants },
   { path: `/restaurant_users`, exact: true, name: 'Restaurant users', component: RestaurantUsers },
+  { path: `/restaurant_users/create`, exact: true, name: 'Add restaurant users', component: CreateRestaurantUsers },
+  { path: `/restaurant_users/edit/:id`, exact: true, name: 'Edit restaurant users', component: EditRestaurantUsers },
   { path: `/restaurant_emails`, exact: true, name: 'Restaurant emails', component: RestaurantEmails },
   { path: `/restaurant_emails/create`, exact: true, name: 'Add restaurant emails', component: CreateRestaurantEmails },
   { path: `/restaurant_emails/edit/:id`, exact: true, name: 'Edit restaurant emails', component: EditRestaurantEmails },

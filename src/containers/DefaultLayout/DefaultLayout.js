@@ -27,7 +27,6 @@ import  {connect} from 'react-redux'
 import {checkRole} from "../../utils/check_roles";
 class DefaultLayout extends Component {
   render() {
-    const { user_id } = this.props.roles
     return (
       <div className="app">
         <AppHeader fixed>

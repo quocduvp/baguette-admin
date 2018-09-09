@@ -4,7 +4,7 @@ const corsURL = "https://cors-anywhere.herokuapp.com/";
 //Get categories
 export const getCategories = (restaurant_id) => {
     return new Promise((resolve,rejects)=>{
-        GetMethod(`/categories?q[restaurant_id_eq]=${restaurant_id}`)
+        GetMethod(`/categories?q[restaurant_id_eq]=${restaurant_id}&all=true`)
         .then(r=>resolve(r)).catch(err=>rejects(err))
     })
 }
@@ -19,7 +19,7 @@ export const getCategoryDetails = (id) => {
 export const fetchRestaurants = (page,per_page) => {
     return new Promise((resolve,rejects)=>{
         if(page >= 1 && per_page >= 1){
-            GetMethod(`/restaurants?per_page=${per_page}&page=${page}`)
+            GetMethod(`/restaurants?per_page=${per_page}&page=${page}&all=true`)
             .then(r=>resolve(r)).catch(err=>rejects(err))
         }else{
             GetMethod(`/restaurants`)

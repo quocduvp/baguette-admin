@@ -9884,5 +9884,11 @@ body {
     text-decoration: none;
     font-size: 15px; }
 
+.restaurants img {
+  transition: all 500ms; }
+
+.restaurants:hover img {
+  transform: rotate(360deg); }
+
 html body .app.flex-row.align-items-center {
   height: 100vh; }

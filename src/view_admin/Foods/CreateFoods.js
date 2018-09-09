@@ -13,7 +13,7 @@ class CreateFoods extends React.Component {
       category_id: 0,
       name: "",
       description: "",
-      price: 0,
+      price: "",
       photo: ""
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -50,7 +50,7 @@ class CreateFoods extends React.Component {
     this.setState({
       name: "",
       description: "",
-      price: 0,
+      price: "",
     })
   }
 

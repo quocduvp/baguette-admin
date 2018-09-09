@@ -61,7 +61,7 @@ export const fetchListUsers = () => {
     let settings = {
       "async": true,
       "crossDomain": true,
-      "url": `${corsURL}${url}/users`,
+      "url": `${corsURL}${url}/users&all=true`,
       "method": 'GET',
       "headers": Headers(),
     }
@@ -106,7 +106,6 @@ export const createUsers = (data) => {
 }
 export const editUsers = ({id}, data) => {
   return new Promise((resolve, rejects) => {
-    console.log(data)
     let form = new FormData();
     form.append("user[nickname]", data.nickname);
     form.append("user[name]", data.name);
@@ -118,7 +117,6 @@ export const editUsers = ({id}, data) => {
       .catch(err => rejects(err))
   })
 }
-
 //restaurants
 export const createRestaurants = (data) => {
   return new Promise((resolve, rejects) => {
@@ -189,6 +187,7 @@ export const editRestaurants = ({id}, data) => {
       form.append("restaurant[facebook_url]", facebook_url);
       form.append("restaurant[youtube_url]", youtube_url);
       form.append("restaurant[instagram_url]", instagram_url);
+      form.append("restaurant[restaurant_users_attributes][0][id]", 38);
       form.append("restaurant[restaurant_users_attributes][0][user_id]", "1");
       form.append("restaurant[restaurant_users_attributes][0][role]", "super_admin");
       form.append("restaurant[address_attributes][id]", address_id);
@@ -239,11 +238,12 @@ export const fetchRestaurantUsersDetails = async (id) => {
   }
 }
 
-export const editRestaurantUsers = async ({id}, data) => {
+export const editRestaurantUsers = async (data,{id}) => {
   try {
     const fd = new FormData()
     fd.append("restaurant_user[user_id]", data.user_id);
     fd.append("restaurant_user[restaurant_id]", data.restaurant_id);
+    fd.append("restaurant_user[role]", data.role)
     const api = await ApiAuth(fd, `/restaurant_users/${id}`, 'PATCH')
     return api
   } catch (e) {
@@ -251,7 +251,7 @@ export const editRestaurantUsers = async ({id}, data) => {
   }
 }
 
-export const deleteRestaurantUsers = async ({id}) => {
+export const deleteRestaurantUsers = async (id) => {
   try {
     const api = await ApiAuth('', `/restaurant_users/${id}`, 'DELETE')
     return api
@@ -265,6 +265,7 @@ export const createRestaurantUsers = async (data) => {
     const fd = new FormData()
     fd.append("restaurant_user[user_id]", data.user_id);
     fd.append("restaurant_user[restaurant_id]", data.restaurant_id);
+    fd.append("restaurant_user[role]", data.role)
     const api = await ApiAuth(fd, `/restaurant_users`, 'POST')
     return api
   } catch (e) {
@@ -278,7 +279,7 @@ export const fetchListRestaurantEmails = (restaurant_name) => {
     let settings = {
       "async": true,
       "crossDomain": true,
-      "url": `${corsURL}${url}/restaurant_emails?q[restaurant_name_eq]=${restaurant_name}`,
+      "url": `${corsURL}${url}/restaurant_emails?q[restaurant_name_eq]=${restaurant_name}&all=true`,
       "method": 'GET',
       "headers": Headers(),
     }
@@ -340,7 +341,7 @@ export const fetchListFoods = (restaurant_id) => {
     let settings = {
       "async": true,
       "crossDomain": true,
-      "url": `${corsURL}${url}/foods?q[category_restaurant_id_eq]=${restaurant_id}`,
+      "url": `${corsURL}${url}/foods?q[category_restaurant_id_eq]=${restaurant_id}&all=true`,
       "method": 'GET',
       "headers": Headers(),
     }
@@ -405,7 +406,7 @@ export const fetchFoodOptions = (restaurant_id) => {
     let settings = {
       "async": true,
       "crossDomain": true,
-      "url": `${corsURL}${url}/food_options?q[food_category_restaurant_id_eq]=${restaurant_id}`,
+      "url": `${corsURL}${url}/food_options?q[food_category_restaurant_id_eq]=${restaurant_id}&all=true`,
       "method": 'GET',
       "headers": Headers(),
     }

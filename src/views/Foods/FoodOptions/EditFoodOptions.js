@@ -4,9 +4,7 @@ import ButtonRedirect from '../../../component/ButtonRedirect';
 import {connect} from 'react-redux'
 import SpinnerCustom from '../../../component/SpinnerCustom'
 import swal from 'sweetalert2'
-import { role } from '../../../utils/check_roles';
-import {fetchFoodDatails, fetchFoodOptionDetails} from "../../../utils/index";
-import {updateFoods} from "../../../Redux/actions/foods.action";
+import {fetchFoodOptionDetails} from "../../../utils/index";
 import {updateFoodOptions} from "../../../Redux/actions/food_options.action";
 class EditFoodOptions extends React.Component {
   constructor(props){
@@ -89,7 +87,7 @@ class EditFoodOptions extends React.Component {
           <Col xl={{size: 6, order: 2,offset:3}} md={{size: 8, order: 2,offset:2}}>
             <Card>
               <CardHeader>
-                <ButtonRedirect path={`${role}/Foods/${food_id}/options`} color="primary">
+                <ButtonRedirect path={`/Foods/${food_id}/options`} color="primary">
                   Back
                 </ButtonRedirect>
               </CardHeader>
