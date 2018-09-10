@@ -58,7 +58,7 @@ class Users extends Component {
   HandleSearch(e){
     e.preventDefault()
     this.setState({
-      searchText : e.target.value
+      searchText : e.target.value.replace(/\\/g, "")
     })
   }
 

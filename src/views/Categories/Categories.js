@@ -16,9 +16,8 @@ class Categories extends Component {
   //search
   HandleSearch(e) {
     e.preventDefault()
-    console.log(e)
     this.setState({
-      searchText: e.target.value
+      searchText: e.target.value.replace(/\\/g, "")
     })
   }
 

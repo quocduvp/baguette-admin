@@ -96,12 +96,12 @@ class EditFoodOptions extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
 
                   <FormGroup>
-                    <Label for="name">Option name</Label>
+                    <Label required for="name">Option name</Label>
                     <Input disabled={!fetched} value={name} onChange={this.handleChange} type="text" name="name"/>
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="price">Option price</Label>
+                    <Label required for="price">Option price</Label>
                     <Input disabled={!fetched} value={price} onChange={this.handleChange} type="text" name="price"/>
                   </FormGroup>
 

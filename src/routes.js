@@ -131,7 +131,6 @@ const routes = [
   { path: `/users`, exact: true, name: 'Users', component: Users },
   { path: `/users/create`, exact: true, name: 'Create user', component: CreateUser },
   { path: `/users/edit/:id`, exact: true, name: 'Edit user', component: EditUsers },
-  { path: `/users/create`, exact: true, name: 'Create users', component: CreateUser },
   { path: `/categories`, exact: true, name: 'Categories', component: Categories },
   { path: `/categories/create`, exact: true, name: 'Create category', component: CreateCategories },
   { path: `/categories/edit/:id`, exact: true, name: 'Create category', component: EditCategories },

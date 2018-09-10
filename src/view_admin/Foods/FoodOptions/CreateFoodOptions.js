@@ -87,12 +87,12 @@ class CreateFoodOptions extends React.Component {
 
                   <FormGroup>
                     <Label for="name">Option name</Label>
-                    <Input value={name} onChange={this.handleChange} type="text" name="name" placeholder="option name"/>
+                    <Input required value={name} onChange={this.handleChange} type="text" name="name" placeholder="option name"/>
                   </FormGroup>
 
                   <FormGroup>
                     <Label for="price">Option price</Label>
-                    <Input value={price} onChange={this.handleChange} type="text" name="price" placeholder="option price"/>
+                    <Input required value={price} onChange={this.handleChange} type="text" name="price" placeholder="option price"/>
                   </FormGroup>
 
                   <div className="d-flex justify-content-end">

@@ -102,7 +102,7 @@ class Foods extends Component {
     e.preventDefault()
     console.log(e.target.value)
     this.setState({
-      searchText: e.target.value
+      searchText: e.target.value.replace(/\\/g, "")
     })
   }
 

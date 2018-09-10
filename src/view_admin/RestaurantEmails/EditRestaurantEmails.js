@@ -82,7 +82,7 @@ class EditRestaurantEmails extends React.Component {
 
                   <FormGroup>
                     <Label for="Email">Email</Label>
-                    <Input disabled={!fetched} name="email" type={'email'} value={email} onChange={this.handleChange}/>
+                    <Input required disabled={!fetched} name="email" type={'email'} value={email} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <div className="d-flex justify-content-end">

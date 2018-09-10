@@ -21,12 +21,6 @@ const Users = Loadable({
   loader: () => import('./view_admin/Users'),
   loading: Loading
 })
-
-//create user
-const CreateUser = Loadable({
-  loader: () => import('./view_admin/Users/CreateUser'),
-  loading: Loading
-})
 const EditUsers = Loadable({
   loader: () => import('./view_admin/Users/EditUsers'),
   loading: Loading
@@ -114,9 +108,7 @@ const routes = [
   { path: `/`, exact: true, name: 'Home', component: DefaultLayout },
   { path: `/dashboard`, name: 'Dashboard', component: Dashboard },
   { path: `${role}/users`, exact: true, name: 'Users', component: Users },
-  { path: `${role}/users/create`, exact: true, name: 'Create user', component: CreateUser },
   { path: `${role}/users/edit/:id`, exact: true, name: 'Edit user', component: EditUsers },
-  { path: `${role}/users/create`, exact: true, name: 'Create users', component: CreateUser },
   { path: `${role}/categories`, exact: true, name: 'Categories', component: Categories },
   { path: `${role}/categories/create`, exact: true, name: 'Create category', component: CreateCategories },
   { path: `${role}/categories/edit/:id`, exact: true, name: 'Create category', component: EditCategories },

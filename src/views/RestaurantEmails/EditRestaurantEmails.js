@@ -21,7 +21,6 @@ class EditRestaurantEmails extends React.Component {
     const id =  this.props.match.params.id
     fetchRestaurantEmailsDetails(id)
       .then(r=>{
-        console.log(r)
         this.setState({
           email : r.data.email,
           fetched : true
@@ -70,6 +69,7 @@ class EditRestaurantEmails extends React.Component {
         <Row>
             <Col xl={{size: 6, order: 2,offset:3}} md={{size: 8, order: 2,offset:2}}>
             <Card>
+
               <CardHeader>
                 <ButtonRedirect path={`/Restaurant_emails`} color="primary">
                   Back
@@ -81,7 +81,7 @@ class EditRestaurantEmails extends React.Component {
 
                   <FormGroup>
                     <Label for="Email">Email</Label>
-                    <Input disabled={!fetched} name="email" type={'email'} value={email} onChange={this.handleChange}/>
+                    <Input required disabled={!fetched} name="email" type={'email'} value={email} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <div className="d-flex justify-content-end">

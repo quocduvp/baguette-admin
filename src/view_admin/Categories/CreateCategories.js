@@ -85,7 +85,7 @@ class CreateCategories extends React.Component {
 
                   <FormGroup>
                     <Label for="Name">Category Name</Label>
-                    <Input name="name" value={name} onChange={this.handleChange}/>
+                    <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>

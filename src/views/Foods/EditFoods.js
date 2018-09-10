@@ -111,7 +111,7 @@ class EditFoods extends React.Component {
 
                   <FormGroup>
                     <Label for="name">Food name</Label>
-                    <Input disabled={!fetched} value={name} onChange={this.handleChange} type="text" name="name"/>
+                    <Input required disabled={!fetched} value={name} onChange={this.handleChange} type="text" name="name"/>
                   </FormGroup>
 
                   <FormGroup>

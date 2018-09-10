@@ -89,7 +89,7 @@ class EditCategories extends React.Component {
 
                   <FormGroup>
                     <Label for="Name">Category Name</Label>
-                    <Input disabled={!fetched} name="name" value={name} onChange={this.handleChange}/>
+                    <Input required disabled={!fetched} name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>

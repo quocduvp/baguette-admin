@@ -79,27 +79,27 @@ class CreateUser extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
                     <Label for="exampleNickname">Nickname</Label>
-                    <Input name="nickname" value={nickname} onChange={this.handleChange}/>
+                    <Input required name="nickname" value={nickname} onChange={this.handleChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="exampleFullname">Fullname</Label>
-                    <Input name="name" value={name} onChange={this.handleChange}/>
+                    <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="examplePhone">Phone number</Label>
-                    <Input name="phone" value={phone} onChange={this.handleChange}/>
+                    <Input required name="phone" value={phone} onChange={this.handleChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="exampleAddress">Address</Label>
-                    <Input name="address" value={address} onChange={this.handleChange}/>
+                    <Input required name="address" value={address} onChange={this.handleChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="exampleEmail">Email</Label>
-                    <Input name="email" value={email} onChange={this.handleChange} type="email"/>
+                    <Input required name="email" value={email} onChange={this.handleChange} type="email"/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="examplePassword">Password</Label>
-                    <Input name="password" value={password} onChange={this.handleChange} type="password"/>
+                    <Input minLength={8} required name="password" value={password} onChange={this.handleChange} type="password"/>
                   </FormGroup>
 
                     <div className="d-flex justify-content-end">

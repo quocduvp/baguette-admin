@@ -22,7 +22,6 @@ class EditFoodOptions extends React.Component {
   }
   componentDidMount(){
     const  {option_id} = this.props.match.params
-    console.log(this.props)
     fetchFoodOptionDetails(option_id)
       .then((r=>{
         return r.data
@@ -98,12 +97,12 @@ class EditFoodOptions extends React.Component {
 
                   <FormGroup>
                     <Label for="name">Option name</Label>
-                    <Input disabled={!fetched} value={name} onChange={this.handleChange} type="text" name="name"/>
+                    <Input required disabled={!fetched} value={name} onChange={this.handleChange} type="text" name="name"/>
                   </FormGroup>
 
                   <FormGroup>
                     <Label for="price">Option price</Label>
-                    <Input disabled={!fetched} value={price} onChange={this.handleChange} type="text" name="price"/>
+                    <Input required disabled={!fetched} value={price} onChange={this.handleChange} type="text" name="price"/>
                   </FormGroup>
 
                   <div className="d-flex justify-content-end">

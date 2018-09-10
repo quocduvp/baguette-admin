@@ -97,7 +97,7 @@ class CreateFoods extends React.Component {
 
                   <FormGroup>
                     <Label for="name">Food name</Label>
-                    <Input value={name} onChange={this.handleChange} type="text" name="name"/>
+                    <Input required value={name} onChange={this.handleChange} type="text" name="name"/>
                   </FormGroup>
 
                   <FormGroup>

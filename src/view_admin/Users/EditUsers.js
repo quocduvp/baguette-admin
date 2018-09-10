@@ -16,7 +16,7 @@ class EditUser extends React.Component {
       phone : "",
       nickname: "",
       address: "",
-      address_id: 6,
+      address_id: "",
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -62,12 +62,14 @@ class EditUser extends React.Component {
       })
     })
   }
+
   handleChange(e){
     e.preventDefault()
     this.setState({
       [e.target.name] : e.target.value
     })
   }
+
   errorMessage = (message) => {
     const {name,phone,nickname,address,address_id} = this.state
     if(name && phone && nickname && address && address_id){
@@ -79,8 +81,8 @@ class EditUser extends React.Component {
     }
   }
   render() {
-    const {name,phone,nickname,address,address_id} = this.state
-    const { err,waitting } = this.props.users
+    const {name,phone,nickname,address} = this.state
+    const { waitting } = this.props.users
     return (
       <div className="animated fadeIn">
         <Row>
@@ -95,34 +97,30 @@ class EditUser extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
                     <Label for="exampleNickname">Nickname</Label>
-                    <Input name="nickname" value={nickname} onChange={this.handleChange}/>
+                    <Input required name="nickname" value={nickname} onChange={this.handleChange}/>
                   </FormGroup>
+
                   <FormGroup>
                     <Label for="exampleFullname">Fullname</Label>
-                    <Input name="name" value={name} onChange={this.handleChange}/>
+                    <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
+
                   <FormGroup>
                     <Label for="examplePhone">Phone number</Label>
-                    <Input name="phone" value={phone} onChange={this.handleChange}/>
+                    <Input required name="phone" value={phone} onChange={this.handleChange}/>
                   </FormGroup>
+
                   <FormGroup>
                     <Label for="exampleAddress">Address</Label>
-                    <Input name="address" value={address} onChange={this.handleChange}/>
+                    <Input required name="address" value={address} onChange={this.handleChange}/>
                   </FormGroup>
-                  <FormGroup>
-                    <Label for="exampleRole">Address id</Label>
-                    <Input name="address_id" value={address_id} onChange={this.handleChange}/>
-                  </FormGroup>
-
-                    {waitting ? this.errorMessage('Form is not empty') : ''}
-
-                    {err ? this.errorMessage('Bad request') : ''}
 
                     <div className="d-flex justify-content-end">
                       {waitting ? <SpinnerCustom/> :
                       <Button type="submit" color="danger">Update</Button>
                       } 
                     </div>
+
                 </Form>
               </CardBody>
               </Card>

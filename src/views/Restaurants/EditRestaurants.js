@@ -103,7 +103,7 @@ class EditRestaurants extends React.Component {
 
                   <FormGroup>
                     <Label for="Name">Restaurant name</Label>
-                    <Input name="name" value={name} onChange={this.handleChange}/>
+                    <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>
@@ -123,12 +123,12 @@ class EditRestaurants extends React.Component {
 
                   <FormGroup>
                     <Label for="Address">Address</Label>
-                    <Input name="address" value={address} onChange={this.handleChange}/>
+                    <Input required name="address" value={address} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>
                     <Label for="Phone">Phone</Label>
-                    <Input name="phone" value={phone} onChange={this.handleChange}/>
+                    <Input required name="phone" value={phone} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>
