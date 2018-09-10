@@ -76,24 +76,6 @@ class CreateRestaurants extends React.Component {
   //   })
   // }
 
-  renderRestaurantUser = () => {
-    const {restaurant_user_role,restaurant_user_user_id} = this.state
-    if(restaurant_user_role && restaurant_user_user_id){
-      return (
-        <React.Fragment>
-                  <FormGroup>
-                    <Label for="User_ID">User ID</Label>
-                    <Input value={restaurant_user_role} disabled/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="User_role">User role</Label>
-                    <Input value={restaurant_user_user_id} disabled/>
-                  </FormGroup>
-        </React.Fragment>
-      )
-    }
-  }
-
   render() {
     const {address,facebook_url,instagram_url,youtube_url,phone,name} = this.state
     const { waitting } = this.props.restaurants

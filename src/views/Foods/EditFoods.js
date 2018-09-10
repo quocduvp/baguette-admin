@@ -7,6 +7,7 @@ import swal from 'sweetalert2'
 import {fetchFoodDatails} from "../../utils";
 import {updateFoods} from "../../Redux/actions/foods.action";
 class EditFoods extends React.Component {
+
   constructor(props){
     super(props)
     this.state = {

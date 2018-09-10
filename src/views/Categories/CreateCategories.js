@@ -8,6 +8,7 @@ import { addCategories } from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
 
 class CreateCategories extends React.Component {
+
   constructor(props){
     super(props)
     this.state = {
@@ -20,6 +21,7 @@ class CreateCategories extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleFile = this.handleFile.bind(this)
   }
+
   componentDidMount(){
     this.props.dispatch(getListRestaurants())
     .then(r=>r)

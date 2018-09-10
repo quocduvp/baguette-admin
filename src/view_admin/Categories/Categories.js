@@ -46,7 +46,7 @@ class Categories extends Component {
           .then(r => {
             swal(
               'Deleted!',
-              'Your file has been deleted.',
+              'Deleted success.',
               'success'
             )
           }).catch(err => {

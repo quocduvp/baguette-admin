@@ -27,7 +27,7 @@ class FoodOptions extends Component {
         .then(r=>{
           swal(
             'Deleted!',
-            'The user has been deleted.',
+            'Deleted success.',
             'success'
           )
         }).catch(err=>{

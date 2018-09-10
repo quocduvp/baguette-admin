@@ -7,7 +7,7 @@ import { getCategoryDetails } from '../../utils/fetch_data';
 import swal from 'sweetalert2'
 import SpinnerCustom from '../../component/SpinnerCustom';
 import { editCategories } from '../../Redux/actions/categories.action';
-import { role } from '../../utils/check_roles';
+
 class EditCategories extends React.Component {
   constructor(props){
     super(props)
@@ -79,7 +79,7 @@ class EditCategories extends React.Component {
             <Col xl={{size: 6, order: 2,offset:3}} md={{size: 8, order: 2,offset:2}}>
             <Card>
               <CardHeader>
-                <ButtonRedirect path={`${role}/Categories`} color="primary">
+                <ButtonRedirect path={`/Categories`} color="primary">
                   Back
                 </ButtonRedirect>
               </CardHeader>

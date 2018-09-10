@@ -1,61 +1,63 @@
-import React, { Component } from 'react';
-import { Card, CardBody,CardHeader, Col, Row, Table } from 'reactstrap';
+import React, {Component} from 'react';
+import {Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import SearchForm from '../../component/SearchForm';
 // import PanigationCustom from '../../component/Panigation';
-import { connect } from 'react-redux'
-import { getListRestaurants } from '../../Redux/actions/restaurants.action';
+import {connect} from 'react-redux'
+import {getListRestaurants} from '../../Redux/actions/restaurants.action';
 import {GetText} from "../../utils/check_roles";
+
 class Restaurants extends Component {
   state = {
-    searchText : ""
-  }
-  componentDidMount(){
-    this.props.dispatch(getListRestaurants())
-    .then(r=>r)
-    .catch(err=>err)
+    searchText: ""
   }
 
-  renderRow = (restaurant,id) => (
-        <tr key={id}>
-            <td>{++id}</td>
-            <td>{restaurant.name}</td>
-            <td>{restaurant.phone}</td>
-            <td>{restaurant.address ? restaurant.address.address : ''}</td>
-            <td>{new Date(restaurant.updated_at).toLocaleDateString()}</td>
-            <td>{new Date(restaurant.created_at).toLocaleDateString()}</td>
-        </tr>
+  componentDidMount() {
+    this.props.dispatch(getListRestaurants())
+      .then(r => r)
+      .catch(err => err)
+  }
+
+  renderRow = (restaurant, id) => (
+    <tr key={id}>
+      <td>{++id}</td>
+      <td>{restaurant.name}</td>
+      <td>{restaurant.phone}</td>
+      <td>{restaurant.address ? restaurant.address.address : ''}</td>
+      <td>{new Date(restaurant.updated_at).toLocaleDateString()}</td>
+      <td>{new Date(restaurant.created_at).toLocaleDateString()}</td>
+    </tr>
   )
 
   renderTable = (list) => (
     <Table responsive hover>
       <thead className="thead-dark">
-        <tr>
-                      <th scope="col">Id</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Phone</th>
-                      <th scope="col">Address</th>
-                      <th scope="col" style={{minWidth:'114px'}}>Update at</th>
-                      <th scope="col" style={{minWidth:'114px'}}>Create at</th>
-        </tr>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Address</th>
+        <th scope="col" style={{minWidth: '114px'}}>Update at</th>
+        <th scope="col" style={{minWidth: '114px'}}>Create at</th>
+      </tr>
       </thead>
       <tbody>
-        {list.map((v,id)=>(
-          this.renderRow(v,id)
-        ))}
+      {list.map((v, id) => (
+        this.renderRow(v, id)
+      ))}
       </tbody>
-    </Table>                
+    </Table>
   )
 
   //search
-  HandleSearch(e){
+  HandleSearch(e) {
     e.preventDefault()
     this.setState({
-      searchText : e.target.value.replace(/\\/g, "")
+      searchText: e.target.value.replace(/\\/g, "")
     })
   }
 
   render() {
-    const { list } = this.props.restaurants
+    const {list} = this.props.restaurants
     const {searchText} = this.state
     return (
       <div className="animated fadeIn">
@@ -79,7 +81,7 @@ class Restaurants extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    restaurants : state.restaurants
+    restaurants: state.restaurants
   }
 }
 export default connect(mapStateToProps)(Restaurants);

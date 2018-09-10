@@ -35,7 +35,7 @@ class Restaurants extends Component {
           .then(r => {
             swal(
               'Deleted!',
-              'The restaurant has been deleted.',
+              'Deleted success.',
               'success'
             )
           }).catch(err => {

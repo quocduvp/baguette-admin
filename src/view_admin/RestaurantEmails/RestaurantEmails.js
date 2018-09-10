@@ -28,7 +28,7 @@ class RestaurantEmails extends Component {
           .then(r => {
             swal(
               'Deleted!',
-              'Email has been deleted.',
+              'Deleted success.',
               'success'
             )
           }).catch(err => {

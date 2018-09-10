@@ -28,7 +28,7 @@ class Foods extends Component {
           .then(r => {
             swal(
               'Deleted!',
-              'Food has been deleted.',
+              'Deleted success.',
               'success'
             )
           }).catch(err => {

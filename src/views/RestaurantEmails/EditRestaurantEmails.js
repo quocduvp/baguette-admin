@@ -7,6 +7,7 @@ import swal from 'sweetalert2'
 import {updateRestaurantEmails} from "../../Redux/actions/restaurant_emails.action";
 import {fetchRestaurantEmailsDetails} from "../../utils";
 class EditRestaurantEmails extends React.Component {
+
   constructor(props){
     super(props)
     this.state = {
@@ -17,6 +18,7 @@ class EditRestaurantEmails extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
+
   componentDidMount(){
     const id =  this.props.match.params.id
     fetchRestaurantEmailsDetails(id)
@@ -27,6 +29,7 @@ class EditRestaurantEmails extends React.Component {
         })
       }).catch(err=>console.log(err))
   }
+
   handleSubmit(e){
     e.preventDefault()
     const id =  this.props.match.params.id
