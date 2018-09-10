@@ -64,7 +64,7 @@ class EditRestaurantUsers extends React.Component {
   }
 
   render() {
-    const { role } = this.state
+    const { user_id,role } = this.state
     const { waitting } = this.props.restaurant_users
     const users = this.props.users.list
     return (
@@ -83,7 +83,7 @@ class EditRestaurantUsers extends React.Component {
 
                   <FormGroup>
                     <Label for="User">Users</Label>
-                    <Input name="user_id" type={'select'} value={role} onChange={this.handleChange}>
+                    <Input name="user_id" type={'select'} value={user_id} onChange={this.handleChange}>
                       {users.map((user,id)=>(
                         <option key={id} value={user.id}>{user.name}</option>
                       ))}
