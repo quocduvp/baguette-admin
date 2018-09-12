@@ -176,7 +176,7 @@ export const editRestaurants = ({id}, data) => {
       form.append("restaurant[restaurant_users_attributes][0][user_id]", "1");
       form.append("restaurant[restaurant_users_attributes][0][role]", "super_admin");
       form.append("restaurant[address_attributes][id]", address_id);
-      form.append("restaurant[address_attributes][address]", address_id);
+      form.append("restaurant[address_attributes][address]", address);
       form.append("restaurant[phone]", phone);
       form.append("restaurant[bg_photo_attributes][id]", photo_id);
       form.append("restaurant[bg_photo_attributes][photo]", photo);
