@@ -117,6 +117,7 @@ export const editUsers = ({id}, data) => {
       .catch(err => rejects(err))
   })
 }
+
 //restaurants
 export const createRestaurants = (data) => {
   return new Promise((resolve, rejects) => {
@@ -228,7 +229,6 @@ export const fetchListRestaurantUsers = () => {
       .catch(err => rejects(err))
   })
 }
-
 export const fetchRestaurantUsersDetails = async (id) => {
   try {
     const api = await ApiAuth('', `/restaurant_users/${id}`, 'GET')
@@ -237,7 +237,6 @@ export const fetchRestaurantUsersDetails = async (id) => {
     throw new Error(e)
   }
 }
-
 export const editRestaurantUsers = async (data,{id}) => {
   try {
     const fd = new FormData()
@@ -250,7 +249,6 @@ export const editRestaurantUsers = async (data,{id}) => {
     throw new Error(e)
   }
 }
-
 export const deleteRestaurantUsers = async (id) => {
   try {
     const api = await ApiAuth('', `/restaurant_users/${id}`, 'DELETE')
@@ -259,7 +257,6 @@ export const deleteRestaurantUsers = async (id) => {
     throw new Error(e)
   }
 }
-
 export const createRestaurantUsers = async (data) => {
   try {
     const fd = new FormData()
@@ -290,7 +287,6 @@ export const fetchListRestaurantEmails = (restaurant_name) => {
       .catch(err => rejects(err))
   })
 }
-
 export const fetchRestaurantEmailsDetails = async (id) => {
   try {
     const api = await ApiAuth('', `/restaurant_emails/${id}`, 'GET')
@@ -299,7 +295,6 @@ export const fetchRestaurantEmailsDetails = async (id) => {
     throw new Error(e)
   }
 }
-
 export const editRestaurantEmails = async (data,{id}) => {
   try {
     const fd = new FormData()
@@ -311,7 +306,6 @@ export const editRestaurantEmails = async (data,{id}) => {
     throw new Error(e)
   }
 }
-
 export const deleteRestaurantEmails = async (id) => {
   try {
     const api = await ApiAuth('', `/restaurant_emails/${id}`, 'DELETE')
@@ -320,7 +314,6 @@ export const deleteRestaurantEmails = async (id) => {
     throw new Error(e)
   }
 }
-
 export const createRestaurantEmails = async (data) => {
   try {
     const fd = new FormData()
@@ -352,7 +345,6 @@ export const fetchListFoods = (restaurant_id) => {
       .catch(err => rejects(err))
   })
 }
-
 export const fetchFoodDatails = ({id}) => {
   return new Promise((resolve, rejects) => {
     ApiAuth('', `/foods/${id}`, 'GET')
@@ -360,7 +352,6 @@ export const fetchFoodDatails = ({id}) => {
       .catch(err => rejects(err))
   })
 }
-
 export const createFoods = (data) => {
   return new Promise((resolve, rejects) => {
     const {category_id, name, description, price, photo} = data
@@ -375,7 +366,6 @@ export const createFoods = (data) => {
       .catch(err => rejects(err))
   })
 }
-
 export const editFoods = (data, {id}) => {
   return new Promise((resolve, rejects) => {
     const {category_id, name, description, price, photo_id, photo} = data
@@ -391,7 +381,6 @@ export const editFoods = (data, {id}) => {
       .catch(err => rejects(err))
   })
 }
-
 export const deleteFoods = ({id}) => {
   return new Promise((resolve, rejects) => {
     ApiAuth('', `/foods/${id}`, 'DELETE')
@@ -455,6 +444,35 @@ export const deleteFoodOptions = (id) => {
       .catch(err => reject(err))
   })
 }
+
+//Orders
+export const fetchOrders = (restaurant_name) => {
+  return new Promise((resolve,rejects)=>{
+    let settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": `${corsURL}${url}/orders?q[restaurant_name_eq]=${restaurant_name}&all=true`,
+      "method": "GET",
+      "headers": Headers()
+    }
+    axios(settings)
+    .then(r=>{
+      resolve(r.data)
+    }).catch(err=>{
+      rejects(err)
+    })
+  })
+}
+export const deleteOrder = (id) => {
+  return new Promise((resolve,rejects)=>{
+    ApiAuth('',`/orders/${id}`,'DELETE')
+    .then(r=>{
+      resolve(r)
+    }).catch(err=>rejects(err))
+  })
+}
+
+
 ///api
 const Api = (data, path) => {
   return new Promise((resolve, rejects) => {

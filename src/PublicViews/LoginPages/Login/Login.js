@@ -13,12 +13,12 @@ import {
   InputGroupText,
   Row
 } from 'reactstrap';
-import bg from './../../images/bg.jpg'
+import bg from './../../../images/bg.jpg'
 import {connect} from 'react-redux'
 import {createHashHistory} from 'history'
-import SpinnerCustom from "../../component/SpinnerCustom";
-import {signIn} from "../../Redux/actions/auth.actions";
-import Alerts from "../../component/Alerts";
+import SpinnerCustom from "../../../component/SpinnerCustom";
+import {signIn} from "../../../Redux/actions/auth.actions";
+import Alerts from "../../../component/Alerts";
 
 const hist = createHashHistory()
 

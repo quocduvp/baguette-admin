@@ -41,6 +41,12 @@ const EditCategories = Loadable({
   loading: Loading
 })
 
+//orders
+const Orders = Loadable({
+  loader : () => import('./PublicViews/Orders'),
+  loading: Loading
+})
+
 //Restaurants
 const Restaurants = Loadable({
   loader : () => import('./view_admin/Restaurants'),
@@ -107,6 +113,7 @@ const EditFoodOptions = Loadable({
 const routes = [
   { path: `/`, exact: true, name: 'Home', component: DefaultLayout },
   { path: `/dashboard`, name: 'Dashboard', component: Dashboard },
+  { path: `/orders`, exact: true, name: 'Orders', component: Orders },
   { path: `${role}/users`, exact: true, name: 'Users', component: Users },
   { path: `${role}/users/edit/:id`, exact: true, name: 'Edit user', component: EditUsers },
   { path: `${role}/categories`, exact: true, name: 'Categories', component: Categories },

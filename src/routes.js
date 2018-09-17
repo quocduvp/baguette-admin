@@ -30,6 +30,7 @@ const EditUsers = Loadable({
   loader: () => import('./views/Users/EditUsers'),
   loading: Loading
 })
+
 //categories
 const Categories = Loadable({
   loader : () => import('./views/Categories'),
@@ -43,6 +44,12 @@ const CreateCategories = Loadable({
 //edit categories
 const EditCategories = Loadable({
   loader : () => import('./views/Categories/EditCategories'),
+  loading: Loading
+})
+
+//orders
+const Orders = Loadable({
+  loader : () => import('./PublicViews/Orders'),
   loading: Loading
 })
 
@@ -128,6 +135,7 @@ const EditFoodOptions = Loadable({
 const routes = [
   { path: `/`, exact: true, name: 'Home', component: DefaultLayout },
   { path: `/dashboard`, name: 'Dashboard', component: Dashboard },
+  { path: `/orders`, exact: true, name: 'Orders', component: Orders },
   { path: `/users`, exact: true, name: 'Users', component: Users },
   { path: `/users/create`, exact: true, name: 'Create user', component: CreateUser },
   { path: `/users/edit/:id`, exact: true, name: 'Edit user', component: EditUsers },

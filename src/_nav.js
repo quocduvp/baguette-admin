@@ -22,6 +22,11 @@ export const nav_super_admin = {
       icon: 'icon-drop',
     },
     {
+      name: 'Orders',
+      url: `/Orders`,
+      icon: 'icon-drop',
+    },
+    {
       title: true,
       name: 'Manage Foods',
       wrapper: {
@@ -74,12 +79,17 @@ export const nav_admin = {
     },
     {
       name: 'Users',
-      url: `${role}/Users`,
+      url: `/Users`,
       icon: 'icon-drop',
     },
     {
       name: 'Categories',
       url: `${role}/Categories`,
+      icon: 'icon-drop',
+    },
+    {
+      name: 'Orders',
+      url: `${role}/Orders`,
       icon: 'icon-drop',
     },
     {

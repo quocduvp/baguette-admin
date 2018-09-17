@@ -8,6 +8,7 @@ import {users} from './reducers/users.reducer'
 import {foods} from './reducers/foods.reducer'
 import {roles} from './reducers/roles'
 import {food_options} from "./reducers/food_options.reducer";
+import {orders} from "./reducers/orders.reducer";
 export const rootReducer = combineReducers({
-    roles,categories,auth,restaurants,users,restaurant_users,restaurant_emails,foods,food_options
+    roles,categories,auth,restaurants,users,restaurant_users,restaurant_emails,foods,food_options,orders
 })  
