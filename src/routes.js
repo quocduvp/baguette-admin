@@ -52,6 +52,10 @@ const Orders = Loadable({
   loader : () => import('./PublicViews/Orders'),
   loading: Loading
 })
+const OrderDetails = Loadable({
+  loader : () => import('./PublicViews/Orders/OrderDetails'),
+  loading: Loading
+})
 
 //Restaurants
 const Restaurants = Loadable({
@@ -136,6 +140,7 @@ const routes = [
   { path: `/`, exact: true, name: 'Home', component: DefaultLayout },
   { path: `/dashboard`, name: 'Dashboard', component: Dashboard },
   { path: `/orders`, exact: true, name: 'Orders', component: Orders },
+  { path: `/orders/:id`, exact: true, name: 'Order details', component: OrderDetails },
   { path: `/users`, exact: true, name: 'Users', component: Users },
   { path: `/users/create`, exact: true, name: 'Create user', component: CreateUser },
   { path: `/users/edit/:id`, exact: true, name: 'Edit user', component: EditUsers },

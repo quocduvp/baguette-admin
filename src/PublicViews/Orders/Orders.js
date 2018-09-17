@@ -7,7 +7,6 @@ import { removeOrder } from '../../Redux/actions/orders.action';
 import ButtonRedirect from '../../component/ButtonRedirect';
 
 class Orders extends Component {
-
   //search
   HandleSearch(e) {
     e.preventDefault()

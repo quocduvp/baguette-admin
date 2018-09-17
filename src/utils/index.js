@@ -463,6 +463,24 @@ export const fetchOrders = (restaurant_name) => {
     })
   })
 }
+export const fetchOrderDetails = (id) => {
+  return new Promise((resolve,rejects)=>{
+    let settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": `${corsURL}${url}/orders/${id}`,
+      "method": "GET",
+      "headers": Headers()
+    }
+    axios(settings)
+    .then(r=>{
+      resolve(r.data)
+    }).catch(err=>{
+      rejects(err)
+    })
+  })
+}
+
 export const deleteOrder = (id) => {
   return new Promise((resolve,rejects)=>{
     ApiAuth('',`/orders/${id}`,'DELETE')
