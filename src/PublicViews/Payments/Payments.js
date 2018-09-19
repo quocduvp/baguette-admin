@@ -106,7 +106,9 @@ class Payments extends Component {
           <Col xl={12}>
             <Card>
               <CardHeader className="d-flex justify-content-between">
-                <div></div>
+                <ButtonRedirect path={`/Payments/create`} color="primary">
+                  Create
+                </ButtonRedirect>
               </CardHeader>
               <CardBody>
                 {this.renderTable(list)}

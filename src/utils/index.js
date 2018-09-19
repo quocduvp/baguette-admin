@@ -528,6 +528,36 @@ export const createPayments = (data) => {
   })
 }
 
+export const deletePayments = (id) => {
+  return new Promise((resolve,rejects)=>{
+    ApiAuth('',`/payment_infos/${id}`, 'DELETE')
+    .then(r=>{
+      resolve(r)
+    }).catch(err=>rejects(err))
+  })
+}
+
+export const editPayments = (data, {id}) => {
+  const { restaurant_id,payment_type, name_id, fullname,card_number, expiry_month, expiry_year,cvv, payment_email_id, payment_email } = data
+  return new Promise((resolve,rejects)=>{
+    let form = new FormData();
+    form.append("payment_info[generatable_type]", "Restaurant");
+    form.append("payment_info[generatable_id]", restaurant_id);
+    form.append("payment_info[payment_type]", payment_type);
+    form.append("payment_info[card_account_attributes][id]", name_id); //if type card
+    form.append("payment_info[card_account_attributes][full_name]", fullname); //if type card
+    form.append("payment_info[card_account_attributes][number]", card_number);
+    form.append("payment_info[card_account_attributes][expiry_month]", expiry_month);
+    form.append("payment_info[card_account_attributes][expiry_year]", expiry_year);
+    form.append("payment_info[card_account_attributes][cvv]", cvv);
+    form.append("payment_info[paypal_account_attributes][id]", payment_email_id); //if type card
+    form.append("payment_info[paypal_account_attributes][paypal_email]", payment_email); //if type card
+    ApiAuth(form, `/payment_infos/${id}`, 'PATCH')
+    .then(r=>resolve(r))
+    .catch(err=>rejects(err))
+  })
+}
+
 ///api
 const Api = (data, path) => {
   return new Promise((resolve, rejects) => {

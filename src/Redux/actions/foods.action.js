@@ -2,22 +2,19 @@ import {GET_LIST_FOODS, FETCH_START, WAIT_FOODS, FOODS_ERR, ADD_FOODS} from "./a
 import {createFoods, deleteFoods, editFoods, fetchListFoods} from "../../utils";
 import {store} from "../store";
 
-export const getListFoods = (restaurant_id) => {
-  return async dispatch => {
-    try{
-      await dispatch({
+export const getListFoods = (restaurant_id) => dispatch => new Promise((resolve,rejects)=>{
+      dispatch({
         type: FETCH_START
       })
-      const data = await fetchListFoods(restaurant_id)
-      await dispatch({
-        type : GET_LIST_FOODS,
-        payload: data
-      })
-    }catch(e){
-      throw new Error(e)
-    }
-  }
-}
+      fetchListFoods(restaurant_id)
+      .then(r=>{
+        dispatch({
+          type : GET_LIST_FOODS,
+          payload: r
+        })
+        resolve(r)
+      }).catch(err=>rejects(err))
+})
 
 export const updateFoods = (data,{id}) => dispatch => new Promise((resolve,rejects)=>{
     dispatch({

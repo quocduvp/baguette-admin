@@ -8,22 +8,21 @@ import {
 import {createFoodOptions, deleteFoodOptions, editFoodOptions, fetchFoodOptions} from "../../utils";
 import {store} from "../store";
 
-export const getListFoodOptions = (restaurant_id) => {
-  return async dispatch => {
-    try{
-      await dispatch({
+export const getListFoodOptions = (restaurant_id) => dispatch => new Promise((resolve,rejects)=>{
+    dispatch({
         type: FETCH_START
-      })
-      const data = await fetchFoodOptions(restaurant_id)
-      await dispatch({
+    })
+    fetchFoodOptions(restaurant_id)
+    .then(r=>{
+      dispatch({
         type : GET_LIST_FOOD_OPTIONS,
-        payload: data
+        payload: r
       })
-    }catch(e){
-      throw new Error(e)
-    }
-  }
-}
+      rejects(r)
+    }).catch(err=>{
+      resolve(err)
+    }) 
+})
 
 export const updateFoodOptions = (data,id) => dispatch => new Promise((resolve,rejects)=>{
   dispatch({
