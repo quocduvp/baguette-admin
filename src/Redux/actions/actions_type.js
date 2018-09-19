@@ -58,6 +58,12 @@ export const DELETE_ORDERS = "DELETE_ORDERS"
 export const WAIT_ORDERS = "WAIT_ADD_ORDERS"
 export const ORDERS_ERR = "ORDERS_ERR"
 
+//payments
+export const GET_LIST_PAYMENTS = "GET_LIST_PAYMENTS"
+export const ADD_PAYMENTS = "ADD_PAYMENTS"
+export const UPDATE_PAYMENTS = "UPDATE_PAYMENTS"
+export const WAIT_PAYMENTS= "WAIT_ADD_PAYMENTS"
+export const PAYMENTS_ERR = "PAYMENTS_ERR"
 
 //actions type user
 export const GET_LIST_USERS = "GET_LIST_USERS"

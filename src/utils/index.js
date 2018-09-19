@@ -490,6 +490,43 @@ export const deleteOrder = (id) => {
   })
 }
 
+//payments
+export const fetchPayments = (restaurant_name) => {
+  return new Promise((resolve,rejects)=>{
+    let settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": `${corsURL}${url}/payment_infos?q[restaurant_name_eq]=${restaurant_name}&all=true`,
+      "method": "GET",
+      "headers": Headers()
+    }
+    axios(settings)
+    .then(r=>{
+      resolve(r.data)
+    }).catch(err=>{
+      rejects(err)
+    })
+  })
+}
+
+export const createPayments = (data) => {
+  return new Promise((resolve,reject)=>{
+    const {restaurant_id,payment_type,fullname,card_number,expiry_month,expiry_year,cvv,paypal_email} = data
+    let form = new FormData();
+    form.append("payment_info[generatable_type]", "Restaurant");
+    form.append("payment_info[generatable_id]", restaurant_id);
+    form.append("payment_info[payment_type]", payment_type);
+    form.append("payment_info[card_account_attributes][full_name]", fullname);
+    form.append("payment_info[card_account_attributes][number]", card_number);
+    form.append("payment_info[card_account_attributes][expiry_month]", expiry_month);
+    form.append("payment_info[card_account_attributes][expiry_year]", expiry_year);
+    form.append("payment_info[card_account_attributes][cvv]", cvv);
+    form.append("payment_info[paypal_account_attributes][paypal_email]", paypal_email);
+    ApiAuth(form, '/payment_infos', 'POST')
+      .then(r => resolve(r))
+      .catch(err => reject(err))
+  })
+}
 
 ///api
 const Api = (data, path) => {

@@ -53,6 +53,11 @@ export const nav_super_admin = {
       icon: 'icon-drop',
     },
     {
+      name: 'Payments',
+      url: '/Payments',
+      icon: 'icon-drop',
+    },
+    {
       name: 'Restaurant Users',
       url: '/Restaurant_users',
       icon: 'icon-drop',
@@ -79,7 +84,7 @@ export const nav_admin = {
     },
     {
       name: 'Users',
-      url: `/Users`,
+      url: `${role}/Users`,
       icon: 'icon-drop',
     },
     {
@@ -89,7 +94,7 @@ export const nav_admin = {
     },
     {
       name: 'Orders',
-      url: `${role}/Orders`,
+      url: `/Orders`,
       icon: 'icon-drop',
     },
     {
@@ -116,6 +121,11 @@ export const nav_admin = {
     {
       name: 'Restaurants',
       url: `${role}/Restaurants`,
+      icon: 'icon-drop',
+    },
+    {
+      name: 'Payments',
+      url: `/Payments`,
       icon: 'icon-drop',
     },
     {

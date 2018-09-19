@@ -8,7 +8,7 @@ const initialState = {
     err: false
 }
 
-export const categories = (state=initialState,actions) => {
+export const categories = (state=initialState,actions)=> {
     switch(actions.type){
         case FETCH_START:
             return {...state,fetching: true}
