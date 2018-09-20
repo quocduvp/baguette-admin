@@ -3,7 +3,6 @@ import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import {Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
 import ButtonRedirect from '../../component/ButtonRedirect';
-// import PanigationCustom from '../../component/Panigation';
 import {connect} from 'react-redux'
 import {removeCategories} from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
