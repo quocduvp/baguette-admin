@@ -7,6 +7,7 @@ import swal from 'sweetalert2'
 import ButtonRedirect from '../../component/ButtonRedirect';
 import bank_cards from '../../images/bank-cards.png'
 import paypal from '../../images/paypal.png'
+import { removePayments } from '../../Redux/actions/payment.action';
 class Payments extends Component {
   //search
   HandleSearch(e) {
@@ -29,21 +30,20 @@ class Payments extends Component {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        // this.props.dispatch(removeOrder(id))
-        //   .then(r => {
-        //     swal(
-        //       'Deleted!',
-        //       'Deleted success.',
-        //       'success'
-        //     )
-        //   }).catch(err => {
-        //   swal(
-        //     'Error!',
-        //     'Delete fails.',
-        //     'error'
-        //   )
-        // })
-
+        this.props.dispatch(removePayments(id))
+          .then(r => {
+            swal(
+              'Deleted!',
+              'Deleted success.',
+              'success'
+            )
+          }).catch(err => {
+          swal(
+            'Error!',
+            'Delete fails.',
+            'error'
+          )
+        })
       }
     })
   }
@@ -56,14 +56,14 @@ class Payments extends Component {
         {payment.generatable.phone}
       </td>
       <td>
-        {payment.payment_type.toLowerCase === 'card' ?  <img width="30px" src={bank_cards} alt=""/> : <img width="30px" src={paypal} alt=""/>}
+        {payment.payment_type.toLowerCase() === 'card' ?  <img width="30px" src={bank_cards} alt=""/> : <img width="30px" src={paypal} alt=""/>}
       </td>
       <td>{new Date(payment.updated_at).toLocaleDateString()}</td>
       <td>{new Date(payment.created_at).toLocaleDateString()}</td>
       <td>
         <ButtonGroup>
-          <ButtonRedirect path={`/Payments/${payment.id}`}>
-            Details
+          <ButtonRedirect path={`/Payments/edit/${payment.id}`}>
+            Edit
           </ButtonRedirect>
           <Button onClick={this.handleDelete.bind(this, payment.id)} color="danger" style={{fontSize: '12px'}}>
             Delete

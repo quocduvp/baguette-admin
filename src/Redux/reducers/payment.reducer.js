@@ -1,4 +1,4 @@
-import { GET_LIST_PAYMENTS, FETCH_START, WAIT_PAYMENTS, PAYMENTS_ERR } from "../actions/actions_type";
+import { GET_LIST_PAYMENTS, FETCH_START, WAIT_PAYMENTS, PAYMENTS_ERR, ADD_PAYMENTS } from "../actions/actions_type";
 
 const initialState = {
     fetching: false,
@@ -11,6 +11,8 @@ export const payments = (state=initialState,actions) => {
     switch(actions.type){
         case FETCH_START:
             return {...state,fetching: true}
+        case ADD_PAYMENTS: 
+            return {...state, waitting: false,err:false}
         case GET_LIST_PAYMENTS:
             return {...state, list : actions.payload,fetching: false,err: false}
         case WAIT_PAYMENTS:

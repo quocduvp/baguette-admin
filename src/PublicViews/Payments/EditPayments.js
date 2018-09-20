@@ -4,9 +4,10 @@ import ButtonRedirect from '../../component/ButtonRedirect';
 import { connect } from 'react-redux'
 import SpinnerCustom from '../../component/SpinnerCustom'
 import swal from 'sweetalert2'
-import { addPayments } from '../../Redux/actions/payment.action';
+import { updatePayments } from '../../Redux/actions/payment.action';
+import { fetchPaymentDetails } from '../../utils';
 
-class CreatePayments extends React.Component {
+class EditPayments extends React.Component {
 
     constructor(props) {
         super(props)
@@ -14,11 +15,13 @@ class CreatePayments extends React.Component {
             restaurant_id: this.props.roles.restaurant_id,
             payment_type: "card",
             fullname: "",
+            name_id: "",
             card_number: "",
             expiry_month: "",
             expiry_year: "",
             cvv: "",
-            paypal_email: ""
+            paypal_email: "",
+            fetched : false
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleCardNumber = this.handleCardNumber.bind(this)
@@ -26,21 +29,38 @@ class CreatePayments extends React.Component {
         this.handleEmail = this.handleEmail.bind(this)
     }
 
+    componentDidMount(){
+        const {id} = this.props.match.params
+        fetchPaymentDetails(id)
+        .then(r=>{
+            console.log(r)
+            const {generatable_id, payment_type} = r
+            this.setState({
+                restaurant_id: generatable_id,
+                name_id : r.card_account.id, 
+                payment_type,
+                fullname: r.card_account.full_name,
+                fetched : true
+            })
+        }).catch(err=> console.log(err.response))
+    }
+
     //submit form
     handleSubmit(e) {
         e.preventDefault()
-        this.props.dispatch(addPayments(this.state))
+        const {id} = this.props.match.params
+        this.props.dispatch(updatePayments(this.state, {id}))
             .then(r => {
                 if (r.status === 200) {
                     swal({
                         title: 'Success',
-                        text: 'Created success',
+                        text: 'Edit success',
                         type: 'success'
                     })
                 } else {
                     swal({
                         title: r.status,
-                        text: 'Created fails',
+                        text: 'Edit fails',
                         type: 'error'
                     })
                 }
@@ -48,7 +68,7 @@ class CreatePayments extends React.Component {
             .catch(err => {
                 swal({
                     title: "Error",
-                    text: "Created fails",
+                    text: "Edit fails",
                     type: 'error'
                 })
             })
@@ -77,7 +97,7 @@ class CreatePayments extends React.Component {
     }
 
     render() {
-        const { fullname, paypal_email, card_number, payment_type, expiry_month, expiry_year, cvv } = this.state
+        const { fullname, paypal_email, card_number, payment_type, expiry_month, expiry_year, cvv, fetched } = this.state
         const { waitting } = this.props.payments
         return (
             <div className="animated fadeIn">
@@ -106,14 +126,6 @@ class CreatePayments extends React.Component {
                                         <Label for="Name">Email*</Label>
                                         <Input required name="paypal_email" type="email" value={paypal_email} onChange={this.handleEmail} />
                                         <FormText>Ex: jones@gmail.com</FormText>
-                                    </FormGroup>
-
-                                    <FormGroup>
-                                        <Label for="payment_type">Payment Type</Label>
-                                        <Input value={payment_type} onChange={this.handleText} type="select" name="payment_type">
-                                            <option value="card">CARD</option>
-                                            <option value="paypal">PAYPAL</option>
-                                        </Input>
                                     </FormGroup>
                                     
                                     <FormGroup>
@@ -146,7 +158,7 @@ class CreatePayments extends React.Component {
 
                                     <div className="d-flex justify-content-end">
                                         {waitting ? <SpinnerCustom /> :
-                                            <Button type="submit" color="danger">SUBMIT</Button>
+                                            <Button disabled={!fetched} type="submit" color="danger">UPDATE</Button>
                                         }
                                     </div>
                                 </Form>
@@ -165,4 +177,4 @@ const mapStateToProps = (state) => {
         payments: state.payments
     }
 }
-export default connect(mapStateToProps)(CreatePayments)
+export default connect(mapStateToProps)(EditPayments)

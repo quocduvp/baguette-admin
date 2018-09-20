@@ -18,9 +18,9 @@ export const getListFoodOptions = (restaurant_id) => dispatch => new Promise((re
         type : GET_LIST_FOOD_OPTIONS,
         payload: r
       })
-      rejects(r)
+      resolve(r)
     }).catch(err=>{
-      resolve(err)
+      rejects(err)
     }) 
 })
 

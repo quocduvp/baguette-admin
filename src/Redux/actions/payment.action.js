@@ -47,7 +47,7 @@ export const addPayments = (data) => dispatch => new Promise((resolve,rejects)=>
       dispatch({
         type: PAYMENTS_ERR
       })
-      resolve(err)
+      rejects(err)
     })
 })
 

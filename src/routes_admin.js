@@ -62,6 +62,11 @@ const CreatePayments = Loadable({
   loading: Loading
 })
 
+const EditPayments = Loadable({
+  loader : () => import('./PublicViews/Payments/EditPayments'),
+  loading: Loading
+})
+
 //Restaurants
 const Restaurants = Loadable({
   loader : () => import('./view_admin/Restaurants'),
@@ -130,6 +135,7 @@ const routes = [
   { path: `/dashboard`, name: 'Dashboard', component: Dashboard },
   { path: `/payments`, exact: true, name: 'Payments', component: Payments },
   { path: `/payments/create`, exact: true, name: 'Add new card', component: CreatePayments },
+  { path: `/payments/edit/:id`, exact: true, name: 'Add new card', component: EditPayments },
   { path: `/orders`, exact: true, name: 'Orders', component: Orders },
   { path: `/orders/:id`, exact: true, name: 'Order details', component: OrderDetails },
   { path: `${role}/users`, exact: true, name: 'Users', component: Users },
