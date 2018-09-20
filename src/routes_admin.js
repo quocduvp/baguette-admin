@@ -17,6 +17,13 @@ const Dashboard = Loadable({
   loading: Loading,
 });
 
+//Notifaications
+const Notifaications = Loadable({
+  loader : () => import('./PublicViews/Notifications'),
+  loading: Loading
+})
+
+//user
 const Users = Loadable({
   loader: () => import('./view_admin/Users'),
   loading: Loading
@@ -73,12 +80,12 @@ const Restaurants = Loadable({
   loading: Loading
 })
 
-//----Restaurant users ---//
-//Restaurants
-const RestaurantUsers = Loadable({
-  loader : () => import('./view_admin/RestaurantUsers'),
-  loading: Loading
-})
+// //----Restaurant users ---//
+// //Restaurants
+// const RestaurantUsers = Loadable({
+//   loader : () => import('./view_admin/RestaurantUsers'),
+//   loading: Loading
+// })
 
 //----Restaurant email ---//
 //Restaurants
@@ -133,6 +140,7 @@ const EditFoodOptions = Loadable({
 const routes = [
   { path: `/`, exact: true, name: 'Home', component: DefaultLayout },
   { path: `/dashboard`, name: 'Dashboard', component: Dashboard },
+  { path: `/notifications`, exact: true, name: 'Notifaications', component: Notifaications },
   { path: `/payments`, exact: true, name: 'Payments', component: Payments },
   { path: `/payments/create`, exact: true, name: 'Add new card', component: CreatePayments },
   { path: `/payments/edit/:id`, exact: true, name: 'Add new card', component: EditPayments },
@@ -144,7 +152,6 @@ const routes = [
   { path: `${role}/categories/create`, exact: true, name: 'Create category', component: CreateCategories },
   { path: `${role}/categories/edit/:id`, exact: true, name: 'Create category', component: EditCategories },
   { path: `${role}/restaurants`, exact: true, name: 'Restaurants', component: Restaurants },
-  { path: `${role}/restaurant_users`, exact: true, name: 'Restaurant users', component: RestaurantUsers },
   { path: `${role}/restaurant_emails`, exact: true, name: 'Restaurant emails', component: RestaurantEmails },
   { path: `${role}/restaurant_emails/create`, exact: true, name: 'Add restaurant emails', component: CreateRestaurantEmails },
   { path: `${role}/restaurant_emails/edit/:id`, exact: true, name: 'Edit restaurant emails', component: EditRestaurantEmails },

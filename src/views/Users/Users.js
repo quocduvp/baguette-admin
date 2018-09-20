@@ -1,70 +1,108 @@
 import React, {Component} from 'react';
-import {ButtonGroup, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
+import ReactTable from 'react-table'
+import 'react-table/react-table.css'
+import {ButtonGroup, Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux'
-import SearchForm from '../../component/SearchForm';
 import ButtonRedirect from '../../component/ButtonRedirect';
-import {GetText} from "../../utils/check_roles";
 
 class Users extends Component {
-  state = {
-    searchText : ""
-  }
 
-  renderRow = (user, id) => (
-    <tr key={id}>
-      <td>{++id}</td>
-      <td>{user.name}</td>
-      <td>{user.nickname}</td>
-      <td>{user.phone}</td>
-      <td>{user.email}</td>
-      <td>{new Date(user.updated_at).toLocaleDateString()}</td>
-      <td>{new Date(user.created_at).toLocaleDateString()}</td>
-      <td>
-        {Number(this.props.roles.user_id) === Number(user.id) ?
-        <ButtonGroup>
-          <ButtonRedirect path={`/Users/edit/${user.id}`} color="primary">
-            Edit
-          </ButtonRedirect>
-        </ButtonGroup> :
-          ''}
-      </td>
-    </tr>
-  )
+  //table
+  renderTable = (list) => {
+    return (
+      <ReactTable
+        data={list}
+        columns={[
+          {
+            Header: 'Data',
+            columns: [
+              {
+                Header : 'ID',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.id}
+                  </div>
+                )
+              },
+              {
+                Header : 'Full name',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.name}
+                  </div>
+                )
+              },
+              {
+                Header : 'Nick name',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.nickname}
+                  </div>
+                )
+              },
+              {
+                Header : 'Email',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.email}
+                  </div>
+                )
+              },
+              {
+                Header : 'Phone number',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.phone}
+                  </div>
+                )
+              },
+              {
+                Header : 'Updated at',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
+              {
+                Header : 'Created at',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
 
-  renderTable = (list) => (
-    <Table responsive hover>
-      <thead className="thead-dark">
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Nickname</th>
-        <th scope="col">Phone</th>
-        <th scope="col">email</th>
-        <th scope="col" style={{minWidth: '114px'}}>Update at</th>
-        <th scope="col" style={{minWidth: '114px'}}>Create at</th>
-        <th scope="col" className="text-center">Process</th>
-      </tr>
-      </thead>
-      <tbody>
-      {list.map((v, id) => (
-        this.renderRow(v, id)
-      ))}
-      </tbody>
-    </Table>
-  )
-
-
-  //search
-  HandleSearch(e){
-    e.preventDefault()
-    this.setState({
-      searchText : e.target.value.replace(/\\/g, "")
-    })
+            ]
+          },
+          {
+            Header: 'Actions',
+            columns: [
+              {
+                Header: 'Edit',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {Number(this.props.roles.user_id) === Number(original.id) ?
+                      <ButtonGroup>
+                        <ButtonRedirect path={`/Users/edit/${original.id}`} color="primary">
+                          Edit
+                        </ButtonRedirect>
+                      </ButtonGroup> :
+                      ''}
+                  </div>
+                )
+              }
+            ]
+          }
+        ]}
+        defaultPageSize={5}
+        className="-striped -highlight"
+      />
+    )
   }
 
   render() {
     const {list} = this.props.users
-    const  { searchText } = this.state
     return (
       <div className="animated fadeIn">
         <Row>
@@ -74,10 +112,10 @@ class Users extends Component {
                 <ButtonRedirect path={`/Users/create`} color="primary">
                   Create
                 </ButtonRedirect>
-                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
+                <div></div>
               </CardHeader>
               <CardBody>
-                {searchText.length >= 1 ? this.renderTable(list.filter(v=>GetText(v.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
+                {this.renderTable(list)}
               </CardBody>
             </Card>
           </Col>

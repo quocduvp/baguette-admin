@@ -8,6 +8,7 @@ import { updateUsers } from '../../Redux/actions/users.action';
 import swal from 'sweetalert2'
 import Alerts from '../../component/Alerts'
 import { fetchUsersDetails } from '../../utils';
+import {role} from "../../utils/check_roles";
 class EditUser extends React.Component {
   constructor(props){
     super(props)
@@ -17,6 +18,7 @@ class EditUser extends React.Component {
       nickname: "",
       address: "",
       address_id: "",
+      fetched: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -31,6 +33,7 @@ class EditUser extends React.Component {
         nickname: r.nickname,
         address: r.address.address,
         address_id: r.address.id,
+        fetched : true
       })
     }).catch(err=>console.log(err))
   }
@@ -81,7 +84,7 @@ class EditUser extends React.Component {
     }
   }
   render() {
-    const {name,phone,nickname,address} = this.state
+    const {name,phone,nickname,address,fetched} = this.state
     const { waitting } = this.props.users
     return (
       <div className="animated fadeIn">
@@ -89,35 +92,35 @@ class EditUser extends React.Component {
             <Col xl={{size: 6, order: 2,offset:3}} md={{size: 8, order: 2,offset:2}}>
             <Card>
               <CardHeader>
-                <ButtonRedirect path={'/Users'} color="primary">
+                <ButtonRedirect path={`${role}/Users`} color="primary">
                   Back
                 </ButtonRedirect>
               </CardHeader>
               <CardBody>
                 <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
-                    <Label for="exampleNickname">Nickname</Label>
+                    <Label for="exampleNickname">Nickname*</Label>
                     <Input required name="nickname" value={nickname} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="exampleFullname">Fullname</Label>
+                    <Label for="exampleFullname">Fullname*</Label>
                     <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="examplePhone">Phone number</Label>
+                    <Label for="examplePhone">Phone number*</Label>
                     <Input required name="phone" value={phone} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="exampleAddress">Address</Label>
+                    <Label for="exampleAddress">Address*</Label>
                     <Input required name="address" value={address} onChange={this.handleChange}/>
                   </FormGroup>
 
                     <div className="d-flex justify-content-end">
                       {waitting ? <SpinnerCustom/> :
-                      <Button type="submit" color="danger">Update</Button>
+                      <Button disabled={!fetched} type="submit" color="danger">Update</Button>
                       } 
                     </div>
 

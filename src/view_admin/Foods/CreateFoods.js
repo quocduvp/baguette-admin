@@ -18,6 +18,7 @@ class CreateFoods extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleChangeNumber = this.handleChangeNumber.bind(this)
     this.handleFile = this.handleFile.bind(this)
   }
 
@@ -57,7 +58,14 @@ class CreateFoods extends React.Component {
   handleChange(e){
     e.preventDefault()
     this.setState({
-      [e.target.name]:e.target.value
+      [e.target.name]:e.target.value.replace(/[&\\#,=+()$~%.'";:*?<>|_\-{}]/g,"")
+    })
+  }
+
+  handleChangeNumber(e){
+    e.preventDefault()
+    this.setState({
+      [e.target.name]:e.target.value.replace(/[&\/\\#,=+()$~%'";:*?<>|_\-{}]/g,"").replace(/[a-zA-Z]/g,"")
     })
   }
 
@@ -86,7 +94,7 @@ class CreateFoods extends React.Component {
               <CardBody>
                 <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
-                    <Label for="Categories">Categories</Label>
+                    <Label for="Categories">Categories*</Label>
                     <Input value={category_id} onChange={this.handleChange} type="select" name="category_id">
                       <option>Choose menu</option>
                       {list.map((cate,id)=>(
@@ -96,13 +104,13 @@ class CreateFoods extends React.Component {
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="name">Food name</Label>
+                    <Label for="name">Food name*</Label>
                     <Input required value={name} onChange={this.handleChange} type="text" name="name"/>
                   </FormGroup>
 
                   <FormGroup>
                     <Label for="price">Price</Label>
-                    <Input value={price} onChange={this.handleChange} type="text" name="price"/>
+                    <Input value={price} onChange={this.handleChangeNumber} type="text" name="price"/>
                   </FormGroup>
 
                   <FormGroup>

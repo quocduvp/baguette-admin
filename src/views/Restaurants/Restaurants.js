@@ -1,26 +1,15 @@
 import React, {Component} from 'react';
-import {Card, Button, ButtonGroup, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import SearchForm from '../../component/SearchForm';
-// import PanigationCustom from '../../component/Panigation';
+import ReactTable from 'react-table'
+import 'react-table/react-table.css'
+import {Card,CardBody, CardHeader, Col, Row,} from 'reactstrap';
 import {connect} from 'react-redux'
-import {getListRestaurants, removeRestaurants} from '../../Redux/actions/restaurants.action';
-import {GetText} from "../../utils/check_roles";
+import {removeRestaurants} from '../../Redux/actions/restaurants.action';
 import ButtonRedirect from "../../component/ButtonRedirect";
 import swal from "sweetalert2";
 
 class Restaurants extends Component {
-  state = {
-    searchText: ""
-  }
 
-  componentDidMount() {
-    this.props.dispatch(getListRestaurants())
-      .then(r => r)
-      .catch(err => err)
-  }
-
-  handleDelete(id, e) {
-    e.preventDefault()
+  handleDelete = (id) => {
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -50,59 +39,98 @@ class Restaurants extends Component {
     })
   }
 
-  renderRow = (restaurant, id) => (
-    <tr key={id}>
-      <td>{++id}</td>
-      <td>{restaurant.name}</td>
-      <td>{restaurant.phone}</td>
-      <td>{restaurant.address ? restaurant.address.address : ''}</td>
-      <td>{new Date(restaurant.updated_at).toLocaleDateString()}</td>
-      <td>{new Date(restaurant.created_at).toLocaleDateString()}</td>
-      <td>
-        <ButtonGroup>
-          <Button onClick={this.handleDelete.bind(this, restaurant.id)} color="danger" style={{fontSize: '12px'}}>
-            Delete
-          </Button>
-          <ButtonRedirect path={`/Restaurants/edit/${restaurant.id}`} color="primary">
-            Edit
-          </ButtonRedirect>
-        </ButtonGroup>
-      </td>
-    </tr>
-  )
-
-  renderTable = (list) => (
-    <Table responsive hover>
-      <thead className="thead-dark">
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Address</th>
-        <th scope="col" style={{minWidth: '114px'}}>Update at</th>
-        <th scope="col" style={{minWidth: '114px'}}>Create at</th>
-        <th scope="col">Process</th>
-      </tr>
-      </thead>
-      <tbody>
-      {list.map((v, id) => (
-        this.renderRow(v, id)
-      ))}
-      </tbody>
-    </Table>
-  )
-
-  //search
-  HandleSearch(e) {
-    e.preventDefault()
-    this.setState({
-      searchText: e.target.value.replace(/\\/g, "")
-    })
+  renderTable = (list) => {
+    return (
+      <ReactTable
+        data={list}
+        columns={[
+          {
+            Header: 'Data',
+            columns: [
+              {
+                Header: 'ID',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {original.id}
+                  </div>
+                )
+              },
+              {
+                Header: 'Name',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {original.name}
+                  </div>
+                )
+              },
+              {
+                Header: 'Phone',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {original.phone}
+                  </div>
+                )
+              },
+              {
+                Header: 'Address',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {original.address ? original.address.address : ''}
+                  </div>
+                )
+              },
+              {
+                Header: 'Updated at',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
+              {
+                Header: 'Created at',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
+            ]
+          },
+          {
+            Header: 'Actions',
+            columns: [
+              {
+                Header: 'Edit',
+                Cell: ({original}) => (
+                  <div className={"text-center"}>
+                    <ButtonRedirect path={`/Restaurants/edit/${original.id}`} color="primary">
+                      Edit
+                    </ButtonRedirect>
+                  </div>
+                )
+              },
+              {
+                Header: 'Delete',
+                Cell: ({original}) => (
+                  <div className={"text-center"}>
+                    <button className="btn btn-danger" onClick={() => this.handleDelete(original.id)}>
+                      Delete
+                    </button>
+                  </div>
+                )
+              }
+            ]
+          }
+        ]}
+        defaultPageSize={5}
+        className="-striped -highlight"
+      />
+    )
   }
 
   render() {
     const {list} = this.props.restaurants
-    const {searchText} = this.state
     return (
       <div className="animated fadeIn">
         <Row>
@@ -112,10 +140,10 @@ class Restaurants extends Component {
                 <ButtonRedirect path={`/Restaurants/create`} color="primary">
                   Create
                 </ButtonRedirect>
-                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
+                <div></div>
               </CardHeader>
               <CardBody>
-                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
+                {this.renderTable(list)}
               </CardBody>
             </Card>
           </Col>

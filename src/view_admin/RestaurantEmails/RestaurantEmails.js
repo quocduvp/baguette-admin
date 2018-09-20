@@ -1,19 +1,15 @@
 import React, {Component} from 'react';
-import {ButtonGroup, Button, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import SearchForm from '../../component/SearchForm';
+import ReactTable from "react-table";
+import 'react-table/react-table.css'
+import {Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux'
-import {GetText, role} from "../../utils/check_roles";
 import ButtonRedirect from "../../component/ButtonRedirect";
 import {removeRestaurantEmails} from "../../Redux/actions/restaurant_emails.action";
 import swal from "sweetalert2";
+import {role} from "../../utils/check_roles";
 
 class RestaurantEmails extends Component {
-  state = {
-    searchText: ""
-  }
-
-  handleDelete(id, e) {
-    e.preventDefault()
+  handleDelete = (id) => {
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -43,55 +39,84 @@ class RestaurantEmails extends Component {
     })
   }
 
-  renderRow = (restaurant, id) => (
-    <tr key={id}>
-      <td>{++id}</td>
-      <td>{restaurant.email}</td>
-      <td>{new Date(restaurant.updated_at).toLocaleDateString()}</td>
-      <td>{new Date(restaurant.created_at).toLocaleDateString()}</td>
-      <td>
-        <ButtonGroup>
-          <Button onClick={this.handleDelete.bind(this, restaurant.id)} color="danger" style={{fontSize: '12px'}}>
-            Delete
-          </Button>
-          <ButtonRedirect path={`${role}/Restaurant_emails/edit/${restaurant.id}`} color="primary">
-            Edit
-          </ButtonRedirect>
-        </ButtonGroup>
-      </td>
-    </tr>
-  )
+  //table
+  renderTable = (list) => {
+    return (
+      <ReactTable
+        data={list}
+        columns={[
+          {
+            Header: 'Data',
+            columns: [
+              {
+                Header : 'ID',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.id}
+                  </div>
+                )
+              },
+              {
+                Header : 'Email',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.email}
+                  </div>
+                )
+              },
+              {
+                Header : 'Updated at',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
+              {
+                Header : 'Created at',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
 
-  renderTable = (list) => (
-    <Table responsive hover>
-      <thead className="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Email</th>
-        <th scope="col" style={{minWidth: '114px'}}>Update at</th>
-        <th scope="col" style={{minWidth: '114px'}}>Create at</th>
-        <th>Process</th>
-      </tr>
-      </thead>
-      <tbody>
-      {list.map((v, id) => (
-        this.renderRow(v, id)
-      ))}
-      </tbody>
-    </Table>
-  )
-
-  //search
-  HandleSearch(e) {
-    e.preventDefault()
-    this.setState({
-      searchText: e.target.value.replace(/\\/g, "")
-    })
+            ]
+          },
+          {
+            Header: 'Actions',
+            columns: [
+              {
+                Header: 'Edit',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <ButtonRedirect path={`${role}/Restaurant_emails/edit/${original.id}`} color="primary">
+                      Edit
+                    </ButtonRedirect>
+                  </div>
+                )
+              },
+              {
+                Header: 'Delete',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <button className="btn btn-danger" onClick={()=>this.handleDelete(original.id)}>
+                      Delete
+                    </button>
+                  </div>
+                )
+              }
+            ]
+          }
+        ]}
+        defaultPageSize={5}
+        className="-striped -highlight"
+      />
+    )
   }
 
   render() {
     const {list} = this.props.restaurant_emails
-    const {searchText} = this.state
     return (
       <div className="animated fadeIn">
         <Row>
@@ -101,10 +126,10 @@ class RestaurantEmails extends Component {
                 <ButtonRedirect path={`${role}/restaurant_emails/create`} color="primary">
                   Create
                 </ButtonRedirect>
-                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
+                <div></div>
               </CardHeader>
               <CardBody>
-                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.email).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
+                {this.renderTable(list)}
               </CardBody>
             </Card>
           </Col>

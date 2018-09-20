@@ -6,8 +6,8 @@ import SpinnerCustom from '../../component/SpinnerCustom'
 import swal from 'sweetalert2'
 import {fetchFoodDatails} from "../../utils";
 import {updateFoods} from "../../Redux/actions/foods.action";
-class EditFoods extends React.Component {
 
+class EditFoods extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -21,6 +21,7 @@ class EditFoods extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleChangeNumber = this.handleChangeNumber.bind(this)
     this.handleFile = this.handleFile.bind(this)
   }
   componentDidMount(){
@@ -29,14 +30,14 @@ class EditFoods extends React.Component {
       .then((r=>{
         return r.data
       })).then(data=>{
-        this.setState({
-          category_id : data.category_id,
-          name : data.name,
-          description: data.description,
-          price: Number(data.price),
-          photo_id : data.photo.id,
-          fetched: true
-        })
+      this.setState({
+        category_id : data.category_id,
+        name : data.name,
+        description: data.description,
+        price: Number(data.price),
+        photo_id : data.photo.id,
+        fetched: true
+      })
     }).catch(err=>console.log(err))
   }
 //submit form
@@ -44,34 +45,41 @@ class EditFoods extends React.Component {
     e.preventDefault()
     const  {id} = this.props.match.params
     this.props.dispatch(updateFoods(this.state,{id}))
-    .then(r=>{
-      if(r.status === 200){
+      .then(r=>{
+        if(r.status === 200){
+          swal({
+            title : 'Success',
+            text: 'Edit success',
+            type: 'success'
+          })
+        }else{
+          swal({
+            title : r.status,
+            text: 'Edit fails',
+            type: 'error'
+          })
+        }
+      })
+      .catch(err=>{
         swal({
-          title : 'Success',
-          text: 'Edit success',
-          type: 'success'
-        })
-      }else{
-        swal({
-          title : r.status,
-          text: 'Edit fails',
+          title : "Error",
+          text: "Edit fails",
           type: 'error'
         })
-      }
-    })
-    .catch(err=>{
-      swal({
-        title : "Error",
-        text: "Edit fails",
-        type: 'error'
       })
-    })
   }
 
   handleChange(e){
     e.preventDefault()
     this.setState({
-      [e.target.name]:e.target.value
+      [e.target.name]:e.target.value.replace(/[&\/\\#,=+()$~%.'";:*?<>|_\-{}]/g,"")
+    })
+  }
+
+  handleChangeNumber(e){
+    e.preventDefault()
+    this.setState({
+      [e.target.name]:e.target.value.replace(/[&\/\\#,=+()$~%'";:*?<>|_\-{}]/g,"").replace(/[a-zA-Z]/g,"")
     })
   }
 
@@ -101,7 +109,7 @@ class EditFoods extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
 
                   <FormGroup>
-                    <Label for="Categories">Categories</Label>
+                    <Label for="Categories">Categories*</Label>
                     <Input disabled={!fetched} value={category_id} onChange={this.handleChange} type="select" name="category_id">
                       <option>Choose menu</option>
                       {list.map((cate,id)=>(
@@ -111,13 +119,13 @@ class EditFoods extends React.Component {
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="name">Food name</Label>
+                    <Label for="name">Food name*</Label>
                     <Input required disabled={!fetched} value={name} onChange={this.handleChange} type="text" name="name"/>
                   </FormGroup>
 
                   <FormGroup>
                     <Label for="price">Price</Label>
-                    <Input disabled={!fetched} value={price} onChange={this.handleChange} type="text" name="price"/>
+                    <Input disabled={!fetched} value={price} onChange={this.handleChangeNumber} type="text" name="price"/>
                   </FormGroup>
 
                   <FormGroup>

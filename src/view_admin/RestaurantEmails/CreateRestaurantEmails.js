@@ -79,7 +79,7 @@ class CreateRestaurantEmails extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
 
                   <FormGroup>
-                    <Label for="Email">Email</Label>
+                    <Label for="Email">Email*</Label>
                     <Input required name="email" type={'email'} value={email} onChange={this.handleChange}/>
                   </FormGroup>
 

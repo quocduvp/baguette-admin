@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button,CardHeader,Card,CardBody,Row,Col,Form, FormGroup, Label, Input} from 'reactstrap';
 import ButtonRedirect from '../../component/ButtonRedirect';
-import { getListRestaurants } from '../../Redux/actions/restaurants.action';
 import {connect} from 'react-redux' 
 import { getCategoryDetails } from '../../utils/fetch_data';
 import swal from 'sweetalert2'
@@ -24,7 +23,6 @@ class EditCategories extends React.Component {
     const id =  this.props.match.params.id
     getCategoryDetails(id)
     .then(r=>{
-      console.log(r)
       this.setState({
         name : r.name,
         restaurant_id: r.restaurant_id,
@@ -32,10 +30,8 @@ class EditCategories extends React.Component {
         fetched : true
       })
     }).catch(err=>console.log(err))
-    this.props.dispatch(getListRestaurants())
-    .then(r=>r)
-    .catch(err=>err)
   }
+
   handleSubmit(e){
     e.preventDefault()
     const id =  this.props.match.params.id
@@ -63,10 +59,11 @@ class EditCategories extends React.Component {
       })
     })
   }
+  
   handleChange(e){
     e.preventDefault()
     this.setState({
-      [e.target.name]:e.target.value
+      [e.target.name]:e.target.value.replace(/[&\/\\#,=+()$~%.'";:*?<>|_\-{}]/g, "")
     })
   }
 

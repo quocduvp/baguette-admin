@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
-import {ButtonGroup, Button, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import SearchForm from '../../component/SearchForm';
+import 'react-table/react-table.css';
+import {Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
 import ButtonRedirect from '../../component/ButtonRedirect';
 import {connect} from 'react-redux'
-import {GetText, role} from '../../utils/check_roles';
 import swal from 'sweetalert2'
 import {removeFoods} from "../../Redux/actions/foods.action";
+import ReactTable from "react-table";
+import {role} from "../../utils/check_roles";
 
 class Foods extends Component {
-  state = {
-    searchText: ""
-  }
 
-  handleDelete(id, e) {
-    e.preventDefault()
+  //delete
+  handleDelete = (id) => {
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -43,71 +41,117 @@ class Foods extends Component {
     })
   }
 
-  //fetch foods
+
+  //table
   renderTable = (list) => {
     return (
-      <Table hover>
-        <thead className="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Food name</th>
-          <th scope="col">Price</th>
-          <th scope="col">Category name</th>
-          <th scope="col">Category type</th>
-          <th scope="col">Update at</th>
-          <th scope="col">Create at</th>
-          <th scope="col">Process</th>
-        </tr>
-        </thead>
-        {this.renderRow(list)}
-      </Table>
-    )
-  }
-  //render row
-  renderRow = (data) => {
-    return (
-      <tbody>
-      {data.map((item, id) => {
-        return (
-          <tr key={id}>
-            <td>{++id}</td>
-            <td>{item.name.length >= 40 ? item.name.substring(0, 40) + '...' : item.name}</td>
-            <td>{item.price}</td>
-            <td>{item.category.name}</td>
-            <td>{item.category.category_type}</td>
-            <td>{new Date(item.updated_at).toLocaleDateString()}</td>
-            <td>{new Date(item.created_at).toLocaleDateString()}</td>
-            <td>
-              <ButtonGroup>
-                <Button onClick={this.handleDelete.bind(this, item.id)} color="danger" style={{fontSize: '12px'}}>
-                  Delete
-                </Button>
-                <ButtonRedirect path={`${role}/Foods/edit/${item.id}`} color="primary">
-                  Edit
-                </ButtonRedirect>
-                <ButtonRedirect path={`${role}/Foods/${item.id}/options`} color="info">
-                  Options
-                </ButtonRedirect>
-              </ButtonGroup>
-            </td>
-          </tr>
-        )
-      })}
-      </tbody>
-    )
-  }
+      <ReactTable
+        data={list}
+        columns={[
+          {
+            Header: 'Data',
+            columns: [
+              {
+                Header: 'ID',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {original.id}
+                  </div>
+                )
+              },
+              {
+                Header: 'Name',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {original.name}
+                  </div>
+                )
+              },
+              {
+                Header: 'Price',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <b>${original.price}</b>
+                  </div>
+                )
+              },
+              {
+                Header: 'Category type',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {original.category.category_type}
+                  </div>
+                )
+              },
+              {
+                Header: 'Category name',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {original.category.name}
+                  </div>
+                )
+              },
+              {
+                Header: 'Updated at',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
+              {
+                Header: 'Created at',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
 
-  //search
-  HandleSearch(e) {
-    e.preventDefault()
-    this.setState({
-      searchText: e.target.value.replace(/\\/g, "")
-    })
+            ]
+          },
+          {
+            Header: 'Actions',
+            columns: [
+              {
+                Header: 'Details',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <ButtonRedirect path={`${role}/Foods/edit/${original.id}`} color="primary">
+                      Edit
+                    </ButtonRedirect>
+                  </div>
+                )
+              },
+              {
+                Header: 'Delete',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <button className="btn btn-danger" onClick={() => this.handleDelete(original.id)}>
+                      Delete
+                    </button>
+                  </div>
+                )
+              },
+              {
+                Header: 'Options',
+                Cell: ({original}) => (
+                  <ButtonRedirect path={`${role}/Foods/${original.id}/options`} color="info">
+                    Options
+                  </ButtonRedirect>
+                )
+              }
+            ]
+          }
+        ]}
+        defaultPageSize={5}
+        className="-striped -highlight"
+      />
+    )
   }
 
   render() {
     const {list} = this.props.foods
-    const {searchText} = this.state
     return (
       <div className="animated fadeIn">
         <Row>
@@ -117,10 +161,10 @@ class Foods extends Component {
                 <ButtonRedirect path={`${role}/Foods/create`} color="primary">
                   Create
                 </ButtonRedirect>
-                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
+                <div></div>
               </CardHeader>
               <CardBody style={{overflow: 'auto'}}>
-                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.name).search(GetText(searchText)) >= 0 || GetText(v.category.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
+                {this.renderTable(list)}
               </CardBody>
             </Card>
           </Col>

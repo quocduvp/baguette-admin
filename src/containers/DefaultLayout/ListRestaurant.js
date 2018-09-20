@@ -15,6 +15,7 @@ import {getListUsers} from "../../Redux/actions/users.action";
 import {getListRestaurants} from "../../Redux/actions/restaurants.action";
 import { getListOrders } from '../../Redux/actions/orders.action';
 import { getListPayments } from '../../Redux/actions/payment.action';
+import { getListNotifications } from '../../Redux/actions/notifications.action';
 
 class ListRestaurant extends Component {
   state = {
@@ -55,6 +56,8 @@ class ListRestaurant extends Component {
         this.props.dispatch(getListOrders(restaurant_name))
       if (this.props.payments.list.length < 1)
         this.props.dispatch(getListPayments(restaurant_name))
+      if (this.props.notifications.list.length < 1)
+        this.props.dispatch(getListNotifications(restaurant_id))
     }
   }
   // if role admin
@@ -75,6 +78,7 @@ class ListRestaurant extends Component {
     this.props.dispatch(getListRestaurantEmails(restaurant_name))
     this.props.dispatch(getListOrders(restaurant_name))
     this.props.dispatch(getListPayments(restaurant_name))
+    this.props.dispatch(getListNotifications(restaurant_id))
   }
   //if role super admin
   changeResSuper(res, e){
@@ -96,6 +100,7 @@ class ListRestaurant extends Component {
     this.props.dispatch(getListRestaurantEmails(restaurant_name))
     this.props.dispatch(getListOrders(restaurant_name))
     this.props.dispatch(getListPayments(restaurant_name))
+    this.props.dispatch(getListNotifications(restaurant_id))
   }
 
   render() {
@@ -143,7 +148,8 @@ const mapStateToProps = (state) => {
     food_options: state.food_options,
     categories: state.categories,
     orders : state.orders,
-    payments : state.payments
+    payments : state.payments,
+    notifications : state.notifications
   }
 }
 export default connect(mapStateToProps)(ListRestaurant)

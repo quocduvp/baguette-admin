@@ -107,14 +107,6 @@ class CreatePayments extends React.Component {
                                         <Input required name="paypal_email" type="email" value={paypal_email} onChange={this.handleEmail} />
                                         <FormText>Ex: jones@gmail.com</FormText>
                                     </FormGroup>
-
-                                    <FormGroup>
-                                        <Label for="payment_type">Payment Type</Label>
-                                        <Input value={payment_type} onChange={this.handleText} type="select" name="payment_type">
-                                            <option value="card">CARD</option>
-                                            <option value="paypal">PAYPAL</option>
-                                        </Input>
-                                    </FormGroup>
                                     
                                     <FormGroup>
                                         <Label for="card_number">Card number*</Label>

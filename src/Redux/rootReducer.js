@@ -10,6 +10,8 @@ import {roles} from './reducers/roles'
 import {food_options} from "./reducers/food_options.reducer";
 import {orders} from "./reducers/orders.reducer";
 import {payments} from "./reducers/payment.reducer";
+import {notifications} from "./reducers/notifications.reducer";
+
 export const rootReducer = combineReducers({
-    roles,categories,auth,restaurants,users,restaurant_users,restaurant_emails,foods,food_options,orders,payments
+    roles,categories,auth,restaurants,users,restaurant_users,restaurant_emails,foods,food_options,orders,payments,notifications
 })  

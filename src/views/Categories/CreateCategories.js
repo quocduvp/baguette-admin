@@ -1,15 +1,15 @@
 import React from 'react';
-import { Button,CardHeader,Card,CardBody,Row,Col,Form, FormGroup, Label, Input } from 'reactstrap';
+import {Button, CardHeader, Card, CardBody, Row, Col, Form, FormGroup, Label, Input} from 'reactstrap';
 import ButtonRedirect from '../../component/ButtonRedirect';
-import { getListRestaurants } from '../../Redux/actions/restaurants.action';
+import {getListRestaurants} from '../../Redux/actions/restaurants.action';
 import {connect} from 'react-redux'
 import SpinnerCustom from '../../component/SpinnerCustom'
-import { addCategories } from '../../Redux/actions/categories.action';
+import {addCategories} from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
 
 class CreateCategories extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       name: "",
@@ -22,59 +22,61 @@ class CreateCategories extends React.Component {
     this.handleFile = this.handleFile.bind(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.dispatch(getListRestaurants())
-    .then(r=>r)
-    .catch(err=>err)
+      .then(r => r)
+      .catch(err => err)
   }
+
 //submit form
-  handleSubmit(e){
+  handleSubmit(e) {
     e.preventDefault()
     this.props.dispatch(addCategories(this.state))
-    .then(r=>{
-      if(r.status === 200){
+      .then(r => {
+        if (r.status === 200) {
+          swal({
+            title: 'Success',
+            text: 'Create success',
+            type: 'success'
+          })
+        } else {
+          swal({
+            title: r.status,
+            text: 'Create fails',
+            type: 'error'
+          })
+        }
+      })
+      .catch(err => {
         swal({
-          title : 'Success',
-          text: 'Create success',
-          type: 'success'
-        })
-      }else{
-        swal({
-          title : r.status,
-          text: 'Create fails',
+          title: "Error",
+          text: "Create fails",
           type: 'error'
         })
-      }
-    })
-    .catch(err=>{
-      swal({
-        title : "Error",
-        text: "Create fails",
-        type: 'error'
       })
+  }
+
+  handleChange(e) {
+    e.preventDefault()
+    this.setState({
+      [e.target.name]: e.target.value.replace(/[&\/\\#,=+()$~%.'";:*?<>|_\-{}]/g, "")
     })
   }
 
-  handleChange(e){
+  handleFile(e) {
     e.preventDefault()
     this.setState({
-      [e.target.name]:e.target.value
-    })
-  }
-  handleFile(e){
-    e.preventDefault()
-    this.setState({
-      photo : e.target.files[0]
+      photo: e.target.files[0]
     })
   }
 
   render() {
-    const {category_type,name} = this.state
-    const { waitting } = this.props.categories
+    const {category_type, name} = this.state
+    const {waitting} = this.props.categories
     return (
       <div className="animated fadeIn">
         <Row>
-            <Col xl={{size: 6, order: 2,offset:3}} md={{size: 8, order: 2,offset:2}}>
+          <Col xl={{size: 6, order: 2, offset: 3}} md={{size: 8, order: 2, offset: 2}}>
             <Card>
               <CardHeader>
                 <ButtonRedirect path={`/Categories`} color="primary">
@@ -86,8 +88,8 @@ class CreateCategories extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
 
                   <FormGroup>
-                    <Label for="Name">Category Name</Label>
-                    <Input name="name" value={name} onChange={this.handleChange}/>
+                    <Label for="Name">Category Name*</Label>
+                    <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>
@@ -105,23 +107,24 @@ class CreateCategories extends React.Component {
 
                   <div className="d-flex justify-content-end">
                     {waitting ? <SpinnerCustom/> :
-                    <Button type="submit" color="danger">SUBMIT</Button>
-                    } 
+                      <Button type="submit" color="danger">SUBMIT</Button>
+                    }
                   </div>
                 </Form>
               </CardBody>
-              
-              </Card>
-            </Col>
+
+            </Card>
+          </Col>
         </Row>
       </div>
     );
   }
 }
+
 const mapStateToProps = (state) => {
-  return{
-    roles : state.roles,
-    categories : state.categories
+  return {
+    roles: state.roles,
+    categories: state.categories
   }
 }
 export default connect(mapStateToProps)(CreateCategories)

@@ -78,27 +78,27 @@ class CreateUser extends React.Component {
               <CardBody>
                 <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
-                    <Label for="exampleNickname">Nickname</Label>
+                    <Label for="exampleNickname">Nickname*</Label>
                     <Input required name="nickname" value={nickname} onChange={this.handleChange}/>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="exampleFullname">Fullname</Label>
+                    <Label for="exampleFullname">Fullname*</Label>
                     <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="examplePhone">Phone number</Label>
+                    <Label for="examplePhone">Phone number*</Label>
                     <Input required name="phone" value={phone} onChange={this.handleChange}/>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="exampleAddress">Address</Label>
+                    <Label for="exampleAddress">Address*</Label>
                     <Input required name="address" value={address} onChange={this.handleChange}/>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="exampleEmail">Email</Label>
+                    <Label for="exampleEmail">Email*</Label>
                     <Input required name="email" value={email} onChange={this.handleChange} type="email"/>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="examplePassword">Password</Label>
+                    <Label for="examplePassword">Password*</Label>
                     <Input minLength={8} required name="password" value={password} onChange={this.handleChange} type="password"/>
                   </FormGroup>
 

@@ -21,10 +21,12 @@ class EditRestaurants extends React.Component {
       photo: null,
       icon_id: 0,
       icon: null,
-      restaurant_user: null
+      restaurant_user: null,
+      fetched : false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleChangeNumber = this.handleChangeNumber.bind(this)
     this.handleChangeFile = this.handleChangeFile.bind(this)
   }
   componentDidMount(){
@@ -39,9 +41,8 @@ class EditRestaurants extends React.Component {
         address: r.address.address,
         phone: r.phone,
         photo_id: r.bg_photo.id,
-        // photo_id: r.bg_photo.photo_url,
         icon_id: r.icon.id,
-        // icon_id: r.icon.photo_url
+        fetched : true
       })
     }).catch(err=>console.log(err))
   }
@@ -72,12 +73,21 @@ class EditRestaurants extends React.Component {
       })
     })
   }
+
   handleChange(e){
     e.preventDefault()
     this.setState({
       [e.target.name]:e.target.value
     })
   }
+
+  handleChangeNumber(e){
+    e.preventDefault()
+    this.setState({
+      [e.target.name]:e.target.value.replace(/[&\/\\#,=$~%'";:.*?<>|_\-{}]/g,"").replace(/[a-zA-Z]/g,"")
+    })
+  }
+
   handleChangeFile(e){
     e.preventDefault()
     this.setState({
@@ -85,7 +95,7 @@ class EditRestaurants extends React.Component {
     })
   }
   render() {
-    const {address,facebook_url,instagram_url,name,phone,youtube_url} = this.state
+    const {address,facebook_url,instagram_url,name,phone,youtube_url,fetched} = this.state
     const { waitting } = this.props.restaurants
     return (
       <div className="animated fadeIn">
@@ -102,7 +112,7 @@ class EditRestaurants extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
 
                   <FormGroup>
-                    <Label for="Name">Restaurant name</Label>
+                    <Label for="Name">Restaurant name *</Label>
                     <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
 
@@ -128,7 +138,7 @@ class EditRestaurants extends React.Component {
 
                   <FormGroup>
                     <Label for="Phone">Phone</Label>
-                    <Input name="phone" value={phone} onChange={this.handleChange}/>
+                    <Input name="phone" value={phone} onChange={this.handleChangeNumber}/>
                   </FormGroup>
 
                   <FormGroup>
@@ -143,7 +153,7 @@ class EditRestaurants extends React.Component {
 
                   <div className="d-flex justify-content-end">
                       {waitting ? <SpinnerCustom/> :
-                      <Button type="submit" color="danger">Update</Button>
+                      <Button disabled={!fetched} type="submit" color="danger">Update</Button>
                       } 
                   </div>
                 </Form>

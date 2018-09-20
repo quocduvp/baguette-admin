@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 import {Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import {connect} from 'react-redux'
-import SearchForm from "../../component/SearchForm";
-import {GetText} from "../../utils/check_roles";
 
 class RestaurantUsers extends Component {
-  state = {
-    searchText: ""
-  }
 
   changeRestaurant(e) {
     e.preventDefault()
@@ -17,13 +12,6 @@ class RestaurantUsers extends Component {
     })
   }
 
-  //search
-  HandleSearch(e){
-    e.preventDefault()
-    this.setState({
-      searchText : e.target.value.replace(/\\/g, "")
-    })
-  }
 
   renderTable = (list) => {
     const {restaurant_id} = this.props.roles
@@ -55,7 +43,6 @@ class RestaurantUsers extends Component {
 
   render() {
     const {list} = this.props.restaurant_users
-    const {searchText} = this.state
     return (
       <div className="animated fadeIn">
         <Row>
@@ -63,10 +50,9 @@ class RestaurantUsers extends Component {
             <Card>
               <CardHeader className="d-flex justify-content-between">
                 <div></div>
-                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
               </CardHeader>
               <CardBody>
-                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.user.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
+                {this.renderTable(list)}
               </CardBody>
             </Card>
           </Col>

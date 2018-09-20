@@ -83,7 +83,7 @@ class CreateRestaurantUsers extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
 
                   <FormGroup>
-                    <Label for="Users">Users</Label>
+                    <Label for="Users">Users*</Label>
                     <Input name="user_id" type={'select'} value={user_id} onChange={this.handleChange}>
                       <option>--- Change users ---</option>
                       {list.map((item,id)=> <option key={id} value={item.id}>{item.name}</option>)}
@@ -91,8 +91,8 @@ class CreateRestaurantUsers extends React.Component {
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="Role">Roles</Label>
-                    <Input name="role" disabled={true} type={'select'} value={role} onChange={this.handleChange}>
+                    <Label for="Role">Roles*</Label>
+                    <Input name="role" type={'select'} value={role} onChange={this.handleChange}>
                       <option value={"admin"}>Admin</option>
                       <option value={"super_admin"}>Super admin</option>
                     </Input>

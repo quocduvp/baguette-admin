@@ -21,6 +21,7 @@ class CreateRestaurants extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleChangeNumber = this.handleChangeNumber.bind(this)
     this.handleChangeFile = this.handleChangeFile.bind(this)
   }
   componentDidMount(){
@@ -61,20 +62,19 @@ class CreateRestaurants extends React.Component {
     })
   }
 
+  handleChangeNumber(e){
+    e.preventDefault()
+    this.setState({
+      [e.target.name]:e.target.value.replace(/[&\/\\#,=$~%'";:.*?<>|_\-{}]/g,"").replace(/[a-zA-Z]/g,"")
+    })
+  }
+
   handleChangeFile(e){
     e.preventDefault()
     this.setState({
       [e.target.name] : e.target.files[0]
     })
   }
-
-  // changeRestaurantUser = (id) => {
-  //   const res = this.props.restaurant_users.list.find(v=>Number(v.id)=== Number(id))
-  //   this.setState({
-  //     restaurant_user_user_id : 37,
-  //     restaurant_user_role: res.role
-  //   })
-  // }
 
   render() {
     const {address,facebook_url,instagram_url,youtube_url,phone,name} = this.state
@@ -94,7 +94,7 @@ class CreateRestaurants extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
 
                   <FormGroup>
-                    <Label for="Name">Restaurant name</Label>
+                    <Label for="Name">Restaurant name*</Label>
                     <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
 
@@ -120,29 +120,17 @@ class CreateRestaurants extends React.Component {
 
                   <FormGroup>
                     <Label for="Phone">Phone</Label>
-                    <Input required name="phone" value={phone} onChange={this.handleChange}/>
-                  </FormGroup>
-
-                  {/* <FormGroup>
-                    <Label for="restaurant_user_user_id">Restaurant Users</Label>
-                    <Input type='select' onChange={(e)=>{this.changeRestaurantUser(e.target.value)}}>
-                      <option value="">--Choose--</option>
-                      {list.map((res,id)=>(
-                        <option key={id} value={res.id}>{res.role}</option>
-                      ))}
-                    </Input>
-                  </FormGroup> */}
-
-                  {/* {this.renderRestaurantUser()} */}
-
-                  <FormGroup>
-                    <Label for="photo">Background photo</Label>
-                    <Input type="file" name="photo" onChange={this.handleChangeFile}/>
+                    <Input required name="phone" value={phone} onChange={this.handleChangeNumber}/>
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="Icon">Icon</Label>
-                    <Input type="file" name="icon" onChange={this.handleChangeFile}/>
+                    <Label for="photo">Background photo*</Label>
+                    <Input required type="file" name="photo" onChange={this.handleChangeFile}/>
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label for="Icon">Icon*</Label>
+                    <Input required type="file" name="icon" onChange={this.handleChangeFile}/>
                   </FormGroup>
 
                   <div className="d-flex justify-content-end">

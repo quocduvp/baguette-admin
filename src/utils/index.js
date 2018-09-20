@@ -165,40 +165,20 @@ export const editRestaurants = ({id}, data) => {
       icon_id,
       icon
     } = data
-    if (data.restaurant_user) {
-      const {
-        restaurant_users_id,
-      } = data.restaurant_user
-      form.append("restaurant[name]", name);
-      form.append("restaurant[facebook_url]", facebook_url);
-      form.append("restaurant[youtube_url]", youtube_url);
-      form.append("restaurant[instagram_url]", instagram_url);
-      form.append("restaurant[restaurant_users_attributes][0][id]", restaurant_users_id);
-      form.append("restaurant[restaurant_users_attributes][0][user_id]", "1");
-      form.append("restaurant[restaurant_users_attributes][0][role]", "super_admin");
-      form.append("restaurant[address_attributes][id]", address_id);
-      form.append("restaurant[address_attributes][address]", address);
-      form.append("restaurant[phone]", phone);
-      form.append("restaurant[bg_photo_attributes][id]", photo_id);
-      form.append("restaurant[bg_photo_attributes][photo]", photo);
-      form.append("restaurant[icon_attributes][id]", icon_id);
-      form.append("restaurant[icon_attributes][photo]", icon);
-    } else {
-      form.append("restaurant[name]", name);
-      form.append("restaurant[facebook_url]", facebook_url);
-      form.append("restaurant[youtube_url]", youtube_url);
-      form.append("restaurant[instagram_url]", instagram_url);
-      form.append("restaurant[restaurant_users_attributes][0][id]", 38);
-      form.append("restaurant[restaurant_users_attributes][0][user_id]", "1");
-      form.append("restaurant[restaurant_users_attributes][0][role]", "super_admin");
-      form.append("restaurant[address_attributes][id]", address_id);
-      form.append("restaurant[address_attributes][address]", address);
-      form.append("restaurant[phone]", phone);
-      form.append("restaurant[bg_photo_attributes][id]", photo_id);
-      form.append("restaurant[bg_photo_attributes][photo]", photo);
-      form.append("restaurant[icon_attributes][id]", icon_id);
-      form.append("restaurant[icon_attributes][photo]", icon);
-    }
+    form.append("restaurant[name]", name);
+    form.append("restaurant[facebook_url]", facebook_url);
+    form.append("restaurant[youtube_url]", youtube_url);
+    form.append("restaurant[instagram_url]", instagram_url);
+    form.append("restaurant[restaurant_users_attributes][0][user_id]", "1");
+    form.append("restaurant[restaurant_users_attributes][0][role]", "super_admin");
+    form.append("restaurant[address_attributes][id]", address_id);
+    form.append("restaurant[address_attributes][address]", address);
+    form.append("restaurant[phone]", phone);
+    form.append("restaurant[bg_photo_attributes][id]", photo_id);
+    form.append("restaurant[bg_photo_attributes][photo]", photo);
+    form.append("restaurant[icon_attributes][id]", icon_id);
+    form.append("restaurant[icon_attributes][photo]", icon);
+
     ApiAuth(data, `/restaurants/${id}`, 'PATCH')
       .then(r => resolve(r))
       .catch(err => rejects(err))
@@ -237,7 +217,7 @@ export const fetchRestaurantUsersDetails = async (id) => {
     throw new Error(e)
   }
 }
-export const editRestaurantUsers = async (data,{id}) => {
+export const editRestaurantUsers = async (data, {id}) => {
   try {
     const fd = new FormData()
     fd.append("restaurant_user[user_id]", data.user_id);
@@ -295,7 +275,7 @@ export const fetchRestaurantEmailsDetails = async (id) => {
     throw new Error(e)
   }
 }
-export const editRestaurantEmails = async (data,{id}) => {
+export const editRestaurantEmails = async (data, {id}) => {
   try {
     const fd = new FormData()
     fd.append("restaurant_email[email]", data.email);
@@ -447,7 +427,7 @@ export const deleteFoodOptions = (id) => {
 
 //Orders
 export const fetchOrders = (restaurant_name) => {
-  return new Promise((resolve,rejects)=>{
+  return new Promise((resolve, rejects) => {
     let settings = {
       "async": true,
       "crossDomain": true,
@@ -456,15 +436,15 @@ export const fetchOrders = (restaurant_name) => {
       "headers": Headers()
     }
     axios(settings)
-    .then(r=>{
-      resolve(r.data)
-    }).catch(err=>{
+      .then(r => {
+        resolve(r.data)
+      }).catch(err => {
       rejects(err)
     })
   })
 }
 export const fetchOrderDetails = (id) => {
-  return new Promise((resolve,rejects)=>{
+  return new Promise((resolve, rejects) => {
     let settings = {
       "async": true,
       "crossDomain": true,
@@ -473,26 +453,26 @@ export const fetchOrderDetails = (id) => {
       "headers": Headers()
     }
     axios(settings)
-    .then(r=>{
-      resolve(r.data)
-    }).catch(err=>{
+      .then(r => {
+        resolve(r.data)
+      }).catch(err => {
       rejects(err)
     })
   })
 }
 
 export const deleteOrder = (id) => {
-  return new Promise((resolve,rejects)=>{
-    ApiAuth('',`/orders/${id}`,'DELETE')
-    .then(r=>{
-      resolve(r)
-    }).catch(err=>rejects(err))
+  return new Promise((resolve, rejects) => {
+    ApiAuth('', `/orders/${id}`, 'DELETE')
+      .then(r => {
+        resolve(r)
+      }).catch(err => rejects(err))
   })
 }
 
 //payments
 export const fetchPayments = (restaurant_name) => {
-  return new Promise((resolve,rejects)=>{
+  return new Promise((resolve, rejects) => {
     let settings = {
       "async": true,
       "crossDomain": true,
@@ -501,16 +481,16 @@ export const fetchPayments = (restaurant_name) => {
       "headers": Headers()
     }
     axios(settings)
-    .then(r=>{
-      resolve(r.data)
-    }).catch(err=>{
+      .then(r => {
+        resolve(r.data)
+      }).catch(err => {
       rejects(err)
     })
   })
 }
 
 export const fetchPaymentDetails = (id) => {
-  return new Promise((resolve,rejects)=>{
+  return new Promise((resolve, rejects) => {
     let settings = {
       "async": true,
       "crossDomain": true,
@@ -519,17 +499,17 @@ export const fetchPaymentDetails = (id) => {
       "headers": Headers()
     }
     axios(settings)
-    .then(r=>{
-      resolve(r.data)
-    }).catch(err=>{
+      .then(r => {
+        resolve(r.data)
+      }).catch(err => {
       rejects(err)
     })
   })
 }
 
 export const createPayments = (data) => {
-  return new Promise((resolve,reject)=>{
-    const {restaurant_id,payment_type,fullname,card_number,expiry_month,expiry_year,cvv,paypal_email} = data
+  return new Promise((resolve, reject) => {
+    const {restaurant_id, payment_type, fullname, card_number, expiry_month, expiry_year, cvv, paypal_email} = data
     let form = new FormData();
     form.append("payment_info[generatable_type]", "Restaurant");
     form.append("payment_info[generatable_id]", restaurant_id);
@@ -547,17 +527,17 @@ export const createPayments = (data) => {
 }
 
 export const deletePayments = (id) => {
-  return new Promise((resolve,rejects)=>{
-    ApiAuth('',`/payment_infos/${id}`, 'DELETE')
-    .then(r=>{
-      resolve(r)
-    }).catch(err=>rejects(err))
+  return new Promise((resolve, rejects) => {
+    ApiAuth('', `/payment_infos/${id}`, 'DELETE')
+      .then(r => {
+        resolve(r)
+      }).catch(err => rejects(err))
   })
 }
 
 export const editPayments = (data, {id}) => {
-  const { restaurant_id,payment_type, name_id, fullname,card_number, expiry_month, expiry_year,cvv, paypal_email_id, paypal_email } = data
-  return new Promise((resolve,rejects)=>{
+  const {restaurant_id, payment_type, name_id, fullname, card_number, expiry_month, expiry_year, cvv, paypal_email_id, paypal_email} = data
+  return new Promise((resolve, rejects) => {
     let form = new FormData();
     form.append("payment_info[generatable_type]", "Restaurant");
     form.append("payment_info[generatable_id]", restaurant_id);
@@ -571,8 +551,36 @@ export const editPayments = (data, {id}) => {
     form.append("payment_info[paypal_account_attributes][id]", paypal_email_id); //if !type card
     form.append("payment_info[paypal_account_attributes][paypal_email]", paypal_email); //if !type card
     ApiAuth(form, `/payment_infos/${id}`, 'PATCH')
-    .then(r=>resolve(r))
-    .catch(err=>rejects(err))
+      .then(r => resolve(r))
+      .catch(err => rejects(err))
+  })
+}
+
+//Notifications
+export const fetchNotifications = (restaurant_id) => {
+  return new Promise((resolve, rejects) => {
+    let settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": `${corsURL}${url}/notifications?all=true`,
+      "method": "GET",
+      "headers": Headers()
+    }
+    axios(settings)
+      .then(r => {
+        resolve(r.data)
+      }).catch(err => {
+      rejects(err)
+    })
+  })
+}
+
+export const deleteNotifications = (id) => {
+  return new Promise((resolve, rejects) => {
+    ApiAuth('', `/notifications/${id}`, 'DELETE')
+      .then(r => {
+        resolve(r)
+      }).catch(err => rejects(err))
   })
 }
 

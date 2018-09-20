@@ -1,23 +1,16 @@
 import React, {Component} from 'react';
-import {ButtonGroup, Button, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-// import PanigationCustom from '../../component/Panigation';
+import ReactTable from 'react-table'
+import 'react-table/react-table.css'
+import { Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux'
 import swal from 'sweetalert2'
 import { removeOrder } from '../../Redux/actions/orders.action';
 import ButtonRedirect from '../../component/ButtonRedirect';
 
 class Orders extends Component {
-  //search
-  HandleSearch(e) {
-    e.preventDefault()
-    this.setState({
-      searchText: e.target.value.replace(/\\/g, "")
-    })
-  }
 
   //delete
-  handleDelete(id, e) {
-    e.preventDefault()
+  handleDelete = (id) => {
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -47,62 +40,120 @@ class Orders extends Component {
     })
   }
 
-  renderRow = (order, id) => (
-    <tr key={id}>
-      <td>{++id}</td>
-      <td>{`${order.first_name} ${order.last_name}`}</td>
-      <td>{order.email}</td>
-      <td>
-        {order.phone}
-      </td>
-      <td>
-        {order.company_name}
-      </td>
-      <td>
-        {order.order_foods.length}
-      </td>
-      <td>
-        <b>${order.total_price}</b>
-      </td>
-      <td>{new Date(order.updated_at).toLocaleDateString()}</td>
-      <td>{new Date(order.created_at).toLocaleDateString()}</td>
-      <td>
-        <ButtonGroup>
-          <ButtonRedirect path={`/Orders/${order.id}`}>
-            Details
-          </ButtonRedirect>
-          <Button onClick={this.handleDelete.bind(this, order.id)} color="danger" style={{fontSize: '12px'}}>
-            Delete
-          </Button>
-        </ButtonGroup>
-      </td>
-    </tr>
-  )
-
-  //filter list
+  
+  //table
   renderTable = (list) => {
     return (
-      <Table responsive hover>
-        <thead className="thead-dark">
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Fullname</th>
-          <th scope="col">Email</th>
-          <th scope="col">Phone number</th>
-          <th scope="col">Company name</th>
-          <th scope="col">Total foods</th>
-          <th scope="col">Total price</th>
-          <th scope="col" style={{minWidth: '114px'}}>Update at</th>
-          <th scope="col" style={{minWidth: '114px'}}>Create at</th>
-          <th scope="col" className="text-center">Process</th>
-        </tr>
-        </thead>
-        <tbody>
-        {list.map((v, id) => (
-          this.renderRow(v, id)
-        ))}
-        </tbody>
-      </Table>
+      <ReactTable
+        data={list}
+        columns={[
+          {
+            Header: 'Data',
+            columns: [
+              {
+                Header : 'ID',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.id}
+                  </div>
+                )
+              },
+              {
+                Header : 'Email',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.email}
+                  </div>
+                )
+              },
+              {
+                Header : 'Fullname',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {`${original.first_name} ${original.last_name}`}
+                  </div>
+                )
+              },
+              {
+                Header : 'Phone number',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.phone}
+                  </div>
+                )
+              },
+              {
+                Header : 'Company',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.company_name}
+                  </div>
+                )
+              },
+              {
+                Header : 'Total foods',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {original.order_foods.length}
+                  </div>
+                )
+              },
+              {
+                Header : 'Total price',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    <b>${original.total_price}</b>
+                  </div>
+                )
+              },
+              {
+                Header : 'Updated at',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
+              {
+                Header : 'Created at',
+                Cell : ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
+              
+            ]
+          },
+          {
+            Header: 'Actions',
+            columns: [
+              {
+                Header: 'Details',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <ButtonRedirect path={`/Orders/${original.id}`}>
+                      Details
+                    </ButtonRedirect>
+                  </div>
+                )
+              },
+              {
+                Header: 'Delete',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <button className="btn btn-danger" onClick={()=>this.handleDelete(original.id)}>
+                        Delete
+                    </button>
+                  </div>
+                )
+              }
+            ]
+          }
+        ]}
+        defaultPageSize={5}
+        className="-striped -highlight"
+      />
     )
   }
 
@@ -119,9 +170,6 @@ class Orders extends Component {
               <CardBody>
                 {this.renderTable(list)}
               </CardBody>
-              {/* <CardFooter className="d-flex justify-content-center">
-                <PanigationCustom changePage={this.handleChangePage} perpage={perPage} totalItems={totalItems} pageRange={3}/>
-              </CardFooter> */}
             </Card>
           </Col>
         </Row>

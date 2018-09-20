@@ -1,37 +1,17 @@
 import React, {Component} from 'react';
-import {ButtonGroup, Button, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import SearchForm from '../../component/SearchForm';
+import ReactTable from 'react-table'
+import 'react-table/react-table.css'
+import {Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
 import ButtonRedirect from '../../component/ButtonRedirect';
 // import PanigationCustom from '../../component/Panigation';
 import {connect} from 'react-redux'
 import {removeCategories} from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
-import {GetText, role} from '../../utils/check_roles';
+import {role} from '../../utils/check_roles';
 
 class Categories extends Component {
-  state = {
-    restaurant_id: 0,
-    searchText: ""
-  }
-
-  //search
-  HandleSearch(e) {
-    e.preventDefault()
-    this.setState({
-      searchText: e.target.value.replace(/\\/g, "")
-    })
-  }
-
-  ChangeRestaurantId(e) {
-    e.preventDefault()
-    this.setState({
-      restaurant_id: e.target.value
-    })
-  }
-
   //delete
-  handleDelete(id, e) {
-    e.preventDefault()
+  handleDelete = (id) => {
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -61,56 +41,93 @@ class Categories extends Component {
     })
   }
 
-  renderRow = (cate, id) => (
-    <tr key={id}>
-      <td>{++id}</td>
-      <td>{cate.name}</td>
-      <td>{cate.category_type}</td>
-      <td>
-        {cate.photo.photo_url ? cate.photo.photo_url.substring(0, 30) : ''}
-      </td>
-      <td>{new Date(cate.updated_at).toLocaleDateString()}</td>
-      <td>{new Date(cate.created_at).toLocaleDateString()}</td>
-      <td>
-        <ButtonGroup>
-          <Button onClick={this.handleDelete.bind(this, cate.id)} color="danger" style={{fontSize: '12px'}}>
-            Delete
-          </Button>
-          <ButtonRedirect path={`${role}/Categories/edit/${cate.id}`} color="primary">
-            Edit
-          </ButtonRedirect>
-        </ButtonGroup>
-      </td>
-    </tr>
-  )
-
   //filter list
-  renderTable = (list) => {
+  renderTable = (data) => {
     return (
-      <Table responsive hover>
-        <thead className="thead-dark">
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Name</th>
-          <th scope="col">Type</th>
-          <th scope="col">Image</th>
-          <th scope="col" style={{minWidth: '114px'}}>Update at</th>
-          <th scope="col" style={{minWidth: '114px'}}>Create at</th>
-          <th scope="col" className="text-center">Process</th>
-        </tr>
-        </thead>
-        <tbody>
-        {list.map((v, id) => (
-          this.renderRow(v, id)
-        ))}
-        </tbody>
-      </Table>
+      <ReactTable
+        data={data}
+        columns={[
+          {
+            Header: 'Data',
+            columns: [
+              {
+                Header: 'ID',
+                Cell: ({original}) => (
+                  <div className="text-center">{Number(original.id)}</div>
+                )
+              },
+              {
+                Header: 'Name',
+                Cell: ({original}) => (
+                  <div className="text-center">{original.name}</div>
+                )
+              },
+              {
+                Header: 'Type',
+                Cell: ({original}) => (
+                  <div className="text-center">{original.category_type}</div>
+                )
+              },
+              {
+                Header: 'Photo',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <img src={original.photo.photo_url} width="32px" alt=""/>
+                  </div>
+                )
+              },
+              {
+                Header: 'Updated at',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              },
+              {
+                Header: 'Created at',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    {new Date(original.updated_at).toLocaleDateString()}
+                  </div>
+                )
+              }
+            ]
+          },
+          {
+            Header: 'Actions',
+            columns: [
+              {
+                Header: 'Details',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <ButtonRedirect path={`${role}/Categories/edit/${original.id}`} color="primary">
+                      Edit
+                    </ButtonRedirect>
+                  </div>
+                )
+              },
+              {
+                Header: 'Delete',
+                Cell: ({original}) => (
+                  <div className="text-center">
+                    <button className="btn btn-danger" onClick={() => this.handleDelete(original.id)}>
+                      Delete
+                    </button>
+                  </div>
+                )
+              }
+            ]
+          }
+        ]}
+        defaultPageSize={5}
+        className="-striped -highlight"
+      />
     )
   }
 
   render() {
     const {list} = this.props.categories
-    const {searchText} = this.state
     return (
       <div className="animated fadeIn">
         <Row>
@@ -120,14 +137,11 @@ class Categories extends Component {
                 <ButtonRedirect path={`${role}/Categories/create`} color="primary">
                   Create
                 </ButtonRedirect>
-                <SearchForm handleSearch={this.HandleSearch.bind(this)} value={searchText}/>
+                <div></div>
               </CardHeader>
               <CardBody>
-                {searchText.length >= 1 ? this.renderTable(list.filter(v => GetText(v.name).search(GetText(searchText)) >= 0)) : this.renderTable(list)}
+                {this.renderTable(list)}
               </CardBody>
-              {/* <CardFooter className="d-flex justify-content-center">
-                <PanigationCustom changePage={this.handleChangePage} perpage={perPage} totalItems={totalItems} pageRange={3}/>
-              </CardFooter> */}
             </Card>
           </Col>
         </Row>

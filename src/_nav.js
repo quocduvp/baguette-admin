@@ -12,6 +12,11 @@ export const nav_super_admin = {
       },
     },
     {
+      name: 'Notifications',
+      url: '/Notifications',
+      icon: 'icon-drop',
+    },
+    {
       name: 'Users',
       url: '/Users',
       icon: 'icon-drop',
@@ -83,6 +88,11 @@ export const nav_admin = {
       },
     },
     {
+      name: 'Notifications',
+      url: '/Notifications',
+      icon: 'icon-drop',
+    },
+    {
       name: 'Users',
       url: `${role}/Users`,
       icon: 'icon-drop',
@@ -126,11 +136,6 @@ export const nav_admin = {
     {
       name: 'Payments',
       url: `/Payments`,
-      icon: 'icon-drop',
-    },
-    {
-      name: 'Restaurant Users',
-      url: `${role}/Restaurant_users`,
       icon: 'icon-drop',
     },
     {

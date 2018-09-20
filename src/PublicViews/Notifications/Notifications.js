@@ -2,15 +2,29 @@ import React, {Component} from 'react';
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import {Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
-import ButtonRedirect from '../../component/ButtonRedirect';
+// import PanigationCustom from '../../component/Panigation';
 import {connect} from 'react-redux'
-import {removeCategories} from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
+// import { removeOrder } from '../../Redux/actions/orders.action';
+import ModalCustom from '../../component/ModalCustom';
+import { removeNotifications } from '../../Redux/actions/notifications.action';
 
-class Categories extends Component {
+
+class Notifications extends Component {
+  state = {
+    modal : false
+  }
+  //search
+  HandleSearch(e) {
+    e.preventDefault()
+    this.setState({
+      searchText: e.target.value.replace(/\\/g, "")
+    })
+  }
 
   //delete
   handleDelete = (id) => {
+    // e.preventDefault()
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -21,7 +35,7 @@ class Categories extends Component {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.props.dispatch(removeCategories(id))
+        this.props.dispatch(removeNotifications(id))
           .then(r => {
             swal(
               'Deleted!',
@@ -35,14 +49,18 @@ class Categories extends Component {
             'error'
           )
         })
-
       }
     })
   }
 
-  //filter list
+  // show/hide modal
+  toggle = () => {
+    this.setState({
+        modal : !this.state.modal
+    })
+  }
   renderTable = (data) => {
-    return (
+    return(
       <ReactTable
         data={data}
         columns={[
@@ -51,45 +69,31 @@ class Categories extends Component {
             columns:[
               {
                 Header: 'ID',
-                Cell: ({original}) => (
-                  <div className="text-center">{Number(original.id)}</div>
+                accessor: 'id',
+                Cell: ({value}) => (
+                  <div className="text-center">{Number(value)}</div>
                 )  
               },
               {
-                Header: 'Name',
-                Cell: ({original}) => (
-                  <div className="text-center">{original.name}</div>
+                Header: 'Subject',
+                accessor: 'subject',
+                Cell: ({value}) => (
+                  <div className="text-center">{value}</div>
                 ) 
               },
               {
-                Header: 'Type',
-                Cell: ({original}) => (
-                  <div className="text-center">{original.category_type}</div>
+                Header: 'Message',
+                accessor: 'message',
+                Cell: ({value}) => (
+                  <div className="text-center">{value}</div>
                 )  
               },
               {
-                Header: 'Photo',
-                Cell: ({original}) => (
-                  <div className="text-center">
-                    <img src={original.photo.photo_url} width="32px" alt=""/>
-                  </div>
+                Header: 'Date summit',
+                accessor: 'created_at',
+                Cell: ({value}) => (
+                  <div className="text-center">{new Date(value).toLocaleDateString()}</div>
                 ) 
-              },
-              {
-                Header : 'Updated at',
-                Cell : ({original}) => (
-                  <div className="text-center">
-                    {new Date(original.updated_at).toLocaleDateString()}
-                  </div>
-                )
-              },
-              {
-                Header : 'Created at',
-                Cell : ({original}) => (
-                  <div className="text-center">
-                    {new Date(original.updated_at).toLocaleDateString()}
-                  </div>
-                )
               }
             ]
           },
@@ -97,21 +101,27 @@ class Categories extends Component {
             Header: 'Actions',
             columns: [
               {
-                Header: 'Details',
+                Header : 'Views',
                 Cell: ({original}) => (
                   <div className="text-center">
-                    <ButtonRedirect path={`/Categories/edit/${original.id}`} color="primary">
-                      Edit
-                    </ButtonRedirect>
+                    <button className="btn btn-info" onClick={this.toggle}>
+                      View
+                    </button>
+                    <ModalCustom titles="Notification" modal={this.state.modal} toggle={this.toggle}>
+                      <h4><b>{original.subject}</b></h4>
+                      <span>
+                        {original.message}
+                      </span>
+                    </ModalCustom>
                   </div>
                 )
               },
               {
-                Header: 'Delete',
+                Header : 'Delete',
                 Cell: ({original}) => (
                   <div className="text-center">
                     <button className="btn btn-danger" onClick={()=>this.handleDelete(original.id)}>
-                        Delete
+                      Delete
                     </button>
                   </div>
                 )
@@ -124,18 +134,14 @@ class Categories extends Component {
       />
     )
   }
-
   render() {
-    const {list} = this.props.categories
+    const {list} = this.props.notifications
     return (
       <div className="animated fadeIn">
         <Row>
           <Col xl={12}>
             <Card>
               <CardHeader className="d-flex justify-content-between">
-                <ButtonRedirect path={`/Categories/create`} color="primary">
-                  Create
-                </ButtonRedirect>
                 <div></div>
               </CardHeader>
               <CardBody>
@@ -151,7 +157,7 @@ class Categories extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    categories: state.categories
+    notifications: state.notifications
   }
 }
-export default connect(mapStateToProps)(Categories);
+export default connect(mapStateToProps)(Notifications);

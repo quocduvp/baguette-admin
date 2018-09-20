@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import SpinnerCustom from '../../component/SpinnerCustom'
 import { addCategories } from '../../Redux/actions/categories.action';
 import swal from 'sweetalert2'
+import { role } from '../../utils/check_roles';
 
 class CreateCategories extends React.Component {
   constructor(props){
@@ -56,7 +57,7 @@ class CreateCategories extends React.Component {
   handleChange(e){
     e.preventDefault()
     this.setState({
-      [e.target.name]:e.target.value
+      [e.target.name]:e.target.value.replace(/[&\/\\#,=+()$~%.'";:*?<>|_\-{}]/g, "")
     })
   }
   handleFile(e){
@@ -75,7 +76,7 @@ class CreateCategories extends React.Component {
             <Col xl={{size: 6, order: 2,offset:3}} md={{size: 8, order: 2,offset:2}}>
             <Card>
               <CardHeader>
-                <ButtonRedirect path={`/Categories`} color="primary">
+                <ButtonRedirect path={`${role}/Categories`} color="primary">
                   Back
                 </ButtonRedirect>
               </CardHeader>
@@ -84,7 +85,7 @@ class CreateCategories extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
 
                   <FormGroup>
-                    <Label for="Name">Category Name</Label>
+                    <Label for="Name">Category Name*</Label>
                     <Input required name="name" value={name} onChange={this.handleChange}/>
                   </FormGroup>
 
