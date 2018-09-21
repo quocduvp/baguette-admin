@@ -3,15 +3,6 @@ import { role } from "./utils/check_roles";
 export const nav_super_admin = {
   items: [
     {
-      name: 'Dashboard',
-      url: '/dashboard',
-      icon: 'icon-speedometer',
-      badge: {
-        variant: 'info',
-        text: 'NEW',
-      },
-    },
-    {
       name: 'Notifications',
       url: '/Notifications',
       icon: 'icon-drop',
@@ -78,15 +69,6 @@ export const nav_super_admin = {
 //asidebar nav admin
 export const nav_admin = {
   items: [
-    {
-      name: 'Dashboard',
-      url: '/dashboard',
-      icon: 'icon-speedometer',
-      badge: {
-        variant: 'info',
-        text: 'NEW',
-      },
-    },
     {
       name: 'Notifications',
       url: '/Notifications',

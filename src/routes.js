@@ -161,7 +161,6 @@ const EditFoodOptions = Loadable({
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: `/`, exact: true, name: 'Home', component: DefaultLayout },
-  { path: `/dashboard`, name: 'Dashboard', component: Dashboard },
   { path: `/notifications`, exact: true, name: 'Notifaications', component: Notifaications },
   { path: `/orders`, exact: true, name: 'Orders', component: Orders },
   { path: `/orders/:id`, exact: true, name: 'Order details', component: OrderDetails },

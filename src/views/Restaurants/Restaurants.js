@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
-import {Card,CardBody, CardHeader, Col, Row,} from 'reactstrap';
+import {Card, CardBody, CardHeader, Col, Row,} from 'reactstrap';
 import {connect} from 'react-redux'
 import {removeRestaurants} from '../../Redux/actions/restaurants.action';
 import ButtonRedirect from "../../component/ButtonRedirect";
@@ -22,15 +22,17 @@ class Restaurants extends Component {
       if (result.value) {
         this.props.dispatch(removeRestaurants(id))
           .then(r => {
+            console.log(r)
             swal(
               'Deleted!',
               'Deleted success.',
               'success'
             )
           }).catch(err => {
+          const { message } = err.response.data
           swal(
             'Error!',
-            'Delete fails.',
+            message,
             'error'
           )
         })

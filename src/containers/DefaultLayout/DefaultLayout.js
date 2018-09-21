@@ -53,7 +53,7 @@ class DefaultLayout extends Component {
                       : (null);
                   },
                 )}
-                <Redirect from="/" to="/dashboard" />
+                <Redirect from="/" to="/notifications" />
               </Switch> : 
               <Switch>
                 {route_admin.map((route, idx) => {
@@ -63,7 +63,7 @@ class DefaultLayout extends Component {
                       : (null);
                   },
                 )}
-                <Redirect from="/" to="/dashboard" />
+                <Redirect from="/" to="/notifycations" />
               </Switch>
               }
             </Container>

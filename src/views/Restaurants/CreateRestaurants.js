@@ -32,6 +32,7 @@ class CreateRestaurants extends React.Component {
     console.log(this.state)
     this.props.dispatch(addRestaurants(this.state))
     .then(r=>{
+      console.log(r)
       if(r.status === 200){
         swal({
           title : 'Success',
@@ -47,9 +48,10 @@ class CreateRestaurants extends React.Component {
       }
     })
     .catch(err=>{
+      const { message } = err.response.data
       swal({
         title : "Error",
-        text: "Create fails",
+        text: message,
         type: 'error'
       })
     })
@@ -100,7 +102,7 @@ class CreateRestaurants extends React.Component {
 
                   <FormGroup>
                     <Label for="Facebook">Facebook url</Label>
-                    <Input required name="facebook_url" value={facebook_url} onChange={this.handleChange}/>
+                    <Input name="facebook_url" value={facebook_url} onChange={this.handleChange}/>
                   </FormGroup>
 
                   <FormGroup>
