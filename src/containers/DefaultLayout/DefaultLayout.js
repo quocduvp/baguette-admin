@@ -63,7 +63,7 @@ class DefaultLayout extends Component {
                       : (null);
                   },
                 )}
-                <Redirect from="/" to="/notifycations" />
+                <Redirect from="/" to="/notifications" />
               </Switch>
               }
             </Container>
