@@ -6,6 +6,7 @@
   "copyright": "",
   "license": "MIT",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@coreui/coreui": "^2.0.4",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",

@@ -117,7 +117,6 @@ class RestaurantUsers extends Component {
 
   render() {
     const {list} = this.props.restaurant_users
-    console.log( this.props.restaurant_users)
     return (
       <div className="animated fadeIn">
         <Row>
