@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {decryptedString, encryptedString} from '../encrypt.config'
 
-export const url = 'http://tastebagdev.herokuapp.com'
+export const url = 'http://139.162.39.229'
 const corsURL = "https://cors-anywhere.herokuapp.com/";
 
 export const authLogin = (form) => {
@@ -59,8 +59,6 @@ export const deleteCategories = (id) => {
 export const fetchListUsers = () => {
   return new Promise((resolve, rejects) => {
     let settings = {
-      "async": true,
-      "crossDomain": true,
       "url": `${corsURL}${url}/users?all=true`,
       "method": 'GET',
       "headers": Headers(),
@@ -595,6 +593,8 @@ const Api = (data, path) => {
       "headers": {
         "Content-Type": "application/x-www-form-urlencoded"
       },
+      "processData": false,
+      "contentType": false,
       "mimeType": "multipart/form-data",
       "data": data
     }

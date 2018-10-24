@@ -97,9 +97,12 @@ class RestaurantUsers extends Component {
                 Header: 'Delete',
                 Cell: ({original}) => (
                   <div className="text-center">
-                    <button className="btn btn-danger" onClick={() => this.handleDelete(original.id)}>
+                    {original.role !== 'super_admin' ?
+                      <button className="btn btn-danger" onClick={() => this.handleDelete(original.id)}>
                       Delete
-                    </button>
+                      </button>
+                      : ''
+                    }
                   </div>
                 )
               }
@@ -114,6 +117,7 @@ class RestaurantUsers extends Component {
 
   render() {
     const {list} = this.props.restaurant_users
+    console.log( this.props.restaurant_users)
     return (
       <div className="animated fadeIn">
         <Row>

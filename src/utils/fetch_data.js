@@ -1,5 +1,5 @@
 import axios from 'axios'
-export const url = 'http://tastebagdev.herokuapp.com'
+export const url = 'http://139.162.39.229'
 const corsURL = "https://cors-anywhere.herokuapp.com/";
 //Get categories
 export const getCategories = (restaurant_id) => {
