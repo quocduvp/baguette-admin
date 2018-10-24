@@ -1,6 +1,6 @@
 import axios from 'axios'
 export const url = 'http://139.162.39.229'
-const corsURL = "https://cors-anywhere.herokuapp.com/";
+const corsURL = "";
 //Get categories
 export const getCategories = (restaurant_id) => {
     return new Promise((resolve,rejects)=>{

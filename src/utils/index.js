@@ -2,7 +2,7 @@ import axios from 'axios'
 import {decryptedString, encryptedString} from '../encrypt.config'
 
 export const url = 'http://139.162.39.229'
-const corsURL = "https://cors-anywhere.herokuapp.com/";
+const corsURL = "";
 
 export const authLogin = (form) => {
   return new Promise((resolve, rejects) => {
