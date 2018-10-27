@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {decryptedString, encryptedString} from '../encrypt.config'
+import { decryptedString, encryptedString } from '../encrypt.config'
 
 export const url = 'http://139.162.39.229'
 const corsURL = "https://cors-anywhere.herokuapp.com/";
@@ -102,7 +102,7 @@ export const createUsers = (data) => {
       .catch(err => rejects(err))
   })
 }
-export const editUsers = ({id}, data) => {
+export const editUsers = ({ id }, data) => {
   return new Promise((resolve, rejects) => {
     let form = new FormData();
     form.append("user[nickname]", data.nickname);
@@ -130,7 +130,6 @@ export const createRestaurants = (data) => {
       photo,
       icon
     } = data
-    console.log(data)
     form.append("restaurant[name]", name);
     form.append("restaurant[facebook_url]", facebook_url);
     form.append("restaurant[youtube_url]", youtube_url);
@@ -147,7 +146,7 @@ export const createRestaurants = (data) => {
       .catch(err => rejects(err))
   })
 }
-export const editRestaurants = ({id}, data) => {
+export const editRestaurants = ({ id }, data) => {
   return new Promise((resolve, rejects) => {
     let form = new FormData();
     const {
@@ -215,7 +214,7 @@ export const fetchRestaurantUsersDetails = async (id) => {
     throw new Error(e)
   }
 }
-export const editRestaurantUsers = async (data, {id}) => {
+export const editRestaurantUsers = async (data, { id }) => {
   try {
     const fd = new FormData()
     fd.append("restaurant_user[user_id]", data.user_id);
@@ -273,7 +272,7 @@ export const fetchRestaurantEmailsDetails = async (id) => {
     throw new Error(e)
   }
 }
-export const editRestaurantEmails = async (data, {id}) => {
+export const editRestaurantEmails = async (data, { id }) => {
   try {
     const fd = new FormData()
     fd.append("restaurant_email[email]", data.email);
@@ -323,7 +322,7 @@ export const fetchListFoods = (restaurant_id) => {
       .catch(err => rejects(err))
   })
 }
-export const fetchFoodDatails = ({id}) => {
+export const fetchFoodDatails = ({ id }) => {
   return new Promise((resolve, rejects) => {
     ApiAuth('', `/foods/${id}`, 'GET')
       .then(r => resolve(r))
@@ -332,7 +331,7 @@ export const fetchFoodDatails = ({id}) => {
 }
 export const createFoods = (data) => {
   return new Promise((resolve, rejects) => {
-    const {category_id, name, description, price, photo} = data
+    const { category_id, name, description, price, photo } = data
     let form = new FormData();
     form.append("food[category_id]", category_id);
     form.append("food[name]", name);
@@ -344,9 +343,9 @@ export const createFoods = (data) => {
       .catch(err => rejects(err))
   })
 }
-export const editFoods = (data, {id}) => {
+export const editFoods = (data, { id }) => {
   return new Promise((resolve, rejects) => {
-    const {category_id, name, description, price, photo_id, photo} = data
+    const { category_id, name, description, price, photo_id, photo } = data
     let form = new FormData();
     form.append("food[category_id]", category_id);
     form.append("food[name]", name);
@@ -359,7 +358,7 @@ export const editFoods = (data, {id}) => {
       .catch(err => rejects(err))
   })
 }
-export const deleteFoods = ({id}) => {
+export const deleteFoods = ({ id }) => {
   return new Promise((resolve, rejects) => {
     ApiAuth('', `/foods/${id}`, 'DELETE')
       .then(r => resolve(r))
@@ -393,7 +392,7 @@ export const fetchFoodOptionDetails = (id) => {
 }
 export const createFoodOptions = (data) => {
   return new Promise((resolve, reject) => {
-    const {food_id, name, price} = data
+    const { food_id, name, price } = data
     let form = new FormData();
     form.append("food_option[food_id]", food_id);
     form.append("food_option[name]", name);
@@ -403,9 +402,9 @@ export const createFoodOptions = (data) => {
       .catch(err => reject(err))
   })
 }
-export const editFoodOptions = (data, {id}) => {
+export const editFoodOptions = (data, { id }) => {
   return new Promise((resolve, reject) => {
-    const {food_id, name, price} = data
+    const { food_id, name, price } = data
     let form = new FormData();
     form.append("food_option[food_id]", food_id);
     form.append("food_option[name]", name);
@@ -437,8 +436,8 @@ export const fetchOrders = (restaurant_name) => {
       .then(r => {
         resolve(r.data)
       }).catch(err => {
-      rejects(err)
-    })
+        rejects(err)
+      })
   })
 }
 export const fetchOrderDetails = (id) => {
@@ -454,8 +453,8 @@ export const fetchOrderDetails = (id) => {
       .then(r => {
         resolve(r.data)
       }).catch(err => {
-      rejects(err)
-    })
+        rejects(err)
+      })
   })
 }
 
@@ -482,8 +481,8 @@ export const fetchPayments = (restaurant_name) => {
       .then(r => {
         resolve(r.data)
       }).catch(err => {
-      rejects(err)
-    })
+        rejects(err)
+      })
   })
 }
 
@@ -500,14 +499,14 @@ export const fetchPaymentDetails = (id) => {
       .then(r => {
         resolve(r.data)
       }).catch(err => {
-      rejects(err)
-    })
+        rejects(err)
+      })
   })
 }
 
 export const createPayments = (data) => {
   return new Promise((resolve, reject) => {
-    const {restaurant_id, payment_type, fullname, card_number, expiry_month, expiry_year, cvv, paypal_email} = data
+    const { restaurant_id, payment_type, fullname, card_number, expiry_month, expiry_year, cvv, paypal_email } = data
     let form = new FormData();
     form.append("payment_info[generatable_type]", "Restaurant");
     form.append("payment_info[generatable_id]", restaurant_id);
@@ -533,8 +532,8 @@ export const deletePayments = (id) => {
   })
 }
 
-export const editPayments = (data, {id}) => {
-  const {restaurant_id, payment_type, name_id, fullname, card_number, expiry_month, expiry_year, cvv, paypal_email_id, paypal_email} = data
+export const editPayments = (data, { id }) => {
+  const { restaurant_id, payment_type, name_id, fullname, card_number, expiry_month, expiry_year, cvv, paypal_email_id, paypal_email } = data
   return new Promise((resolve, rejects) => {
     let form = new FormData();
     form.append("payment_info[generatable_type]", "Restaurant");
@@ -568,8 +567,8 @@ export const fetchNotifications = (restaurant_id) => {
       .then(r => {
         resolve(r.data)
       }).catch(err => {
-      rejects(err)
-    })
+        rejects(err)
+      })
   })
 }
 
@@ -591,6 +590,8 @@ const Api = (data, path) => {
       "url": `${corsURL}${url}${path}`,
       "method": "POST",
       "headers": {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
         "Content-Type": "application/x-www-form-urlencoded"
       },
       "processData": false,
@@ -633,6 +634,8 @@ const Headers = () => {
     const token_type = header['token-type']
     const uid = header['uid']
     return {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
       "Access-Token": access_token,
       "Client": client,
       "Expiry": expiry,

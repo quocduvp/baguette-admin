@@ -31,8 +31,8 @@ class EditUser extends React.Component {
         name: r.name,
         phone: r.phone,
         nickname: r.nickname,
-        address: r.address.address,
-        address_id: r.address.id,
+        address: r.address ? r.address.address : '',
+        address_id: r.address ? r.address.id : '',
         fetched: true
       })
     }).catch(err => console.log(err))
