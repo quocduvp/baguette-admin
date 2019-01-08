@@ -64,6 +64,10 @@
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm cache clean --force && npm update && npm run build"
+  },
+  "engines": {
+     "node" : "8.5.8"
   }
 }
